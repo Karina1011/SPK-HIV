@@ -1,56 +1,27 @@
-@extends('admin.dashboard')
-@section('edit-gejala')
-<!-- Content wrapper -->
-<div class="content-wrapper">
-    <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Form/</span> Tambah Data Gejala</h4>
-  
-      <!-- Basic Layout & Basic with Icons -->
-      <div class="row">
-        <!-- Basic Layout -->
-        <div class="col-xxl">
-          <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-              <h5 class="mb-0">Tambah Gejala</h5>
-              <small class="text-muted float-end">Default label</small>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('gejala.update', $gejala->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                <div class="form-group">
-                    <label class="font-weight-bold">Nama Gejala</label>
-                    <input type="text" class="form-control @error('nama_gejala') is-invalid @enderror" name="nama_gejala" value="{{ old('nama_gejala') }}" placeholder="Masukkan Nama Gejala">
-                
-                    <!-- error message untuk nama_gejala -->
-                    @error('nama_gejala')
-                        <div class="alert alert-danger mt-2">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-  
-                <div class="form-group">
-                  <label class="font-weight-bold">Kode Gejala</label>
-                  <input type="text" class="form-control @error('kd_gejala') is-invalid @enderror" name="kd_gejala" value="{{ old('kd_gejala') }}" placeholder="Masukkan Nama Gejala">
-              
-                  <!-- error message untuk kd_gejala -->
-                  @error('kd_gejala')
-                      <div class="alert alert-danger mt-2">
-                          {{ $message }}
-                      </div>
-                  @enderror
-              </div>
-  
-                <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
-                <button type="reset" class="btn btn-md btn-warning">RESET</button>
-  
-            </form> 
-            </div>
-          </div>
-        </div> 
-        @endsection
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-        <script>
+<input type="hidden" name="id" value="{{ $edit->id }}">
+<div class="form-group mb-1">
+    <label for="nama_gejala">Nama Gejala</label>
+    <input type="text" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}{{ $edit->nama_gejala }}" required>
+    @error('nama_gejala')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+</div>
+<div class="form-group mb-1">
+    <label for="kode_gejala">Kode Gejala</label>
+    <input type="text" class="form-control" name="kode_gejala" id="kode_gejala"
+        placeholder="Input Kode gejala" 
+        @error('kode_gejala') is-invalid @enderror value="{{ old('kode_gejala') }}{{ $edit->kode_gejala }}" required>
+    @error('kode_gejala')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+</div>
+{{-- <div class="form-group mb-1">
+    <label for="solusi">Solusi</label>
+    <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="edit" rows="3" placeholder="Masukan artikel">{{ old('solusi', $edit->solusi) }}</textarea>
+    @error('solusi')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+</div> --}}
+<script>
+    CKEDITOR.replace('edit');
+</script>

@@ -128,11 +128,10 @@
 
         @include('partials.sidebar')
         @include('partials.navbar')   
-@yield('pengguna')
-@yield('admin')
-@yield('gejala')
-@yield('penyakit')
-@yield('tambah-penyakit')
+        @yield('pengguna')
+        @yield('admin')
+        @yield('gejala')
+        @yield('Penyakit')
 
 <div class="content-backdrop fade"></div>
           </div>
@@ -162,10 +161,12 @@
 
     <!-- Main JS -->
     <script src="{{asset('admin/assets/js/main.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    @yield('js')
   </body>
 </html>

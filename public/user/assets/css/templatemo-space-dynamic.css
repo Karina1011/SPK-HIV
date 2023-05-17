@@ -142,7 +142,8 @@ global styles
 */
 html,
 body {
-  background: #fff;
+  /* background: #fff; */
+  background-image: url('user/assets/images/bg-tentang.png');
   font-family: 'Poppins', sans-serif;
 }
 
@@ -262,7 +263,7 @@ header
 }
 
 .header-area {
-  background-color: #92140c;
+  background-color: #c23b34;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -835,7 +836,7 @@ Banner Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 226px 0px 120px 0px;
+  padding: 120px 0px 120px 0px;
   position: relative;
   overflow: hidden;
 }
@@ -846,7 +847,7 @@ Banner Style
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
-  top: 80px;
+  top: 76px;
   width: 193px;
   height: 467px;
 }
@@ -857,7 +858,7 @@ Banner Style
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
-  top: 100px;
+  top: 76px;
   width: 98px;
   height: 290px;
 }
@@ -869,7 +870,7 @@ Banner Style
 .main-banner .left-content h6 {
   text-transform: uppercase;
   font-size: 18px;
-  color: #92140c;
+  color: #c23b34;
   margin-bottom: 15px;
 }
 
@@ -881,12 +882,12 @@ Banner Style
 }
 
 .main-banner .left-content h2 em {
-  color: #92140c;
+  color: #c23b34;
   font-style: normal;
 }
 
 .main-banner .left-content h2 span {
-  color: #92140c;
+  color: #c23b34;
 }
 
 .main-banner .left-content p {

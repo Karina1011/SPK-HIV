@@ -16,12 +16,18 @@ class PenyakitController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nama_penyakit' => 'required',
+            'kode_penyakit' => 'required',
+            'solusi' => 'required|min:5'
+        ]);
+
         Penyakit::create([
             'nama_penyakit' => $request->nama_penyakit,
             'kode_penyakit' => $request->kode_penyakit,
             'solusi' => $request->solusi,
         ]);
-        return redirect()->back()->with('success', 'Data penyakit berhasil ditambahkan!');
+        return redirect()->route('penyakit.index')->with('success', 'Data penyakit berhasil ditambahkan!');
     }
     public function edit(Request $request)
     {
@@ -50,6 +56,6 @@ class PenyakitController extends Controller
         $penyakit->delete();
 
         //redirect to index
-        return redirect('admin/penyakit/index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('penyakit.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

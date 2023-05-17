@@ -7,19 +7,17 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
-              <h4>Spac<span>Dyna</span></h4>
+            <a href="/" class="logo">
+              <h4>SP - <span>HIV/AIDS</span></h4>
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li class="scroll-to-section"><a href="#top" class="active">Beranda</a></li>
+              <li class="scroll-to-section"><a href="/" class="active">Beranda</a></li>
               <li class="scroll-to-section"><a href="/pasien/layouts/tentang">Tentang Kami</a></li>
               <li class="scroll-to-section"><a href="/pasien/layouts/edukasi">Edukasi Seks</a></li>
-              <li class="scroll-to-section"><a href="#portfolio">Tutorial</a></li>
-              <li class="scroll-to-section"><a href="#blog"></a></li> 
-              <li class="scroll-to-section"><a href="#contact">Message Us</a></li> 
-              <li class="scroll-to-section"><div class="main-red-button"><a href="#contact">Konsultasi</a></div></li> 
+              <li class="scroll-to-section"><a href="/tutorial">Tutorial</a></li>
+              <li class="scroll-to-section"><div class="main-red-button"><a href="/konsultasi">Konsultasi</a></div></li> 
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>

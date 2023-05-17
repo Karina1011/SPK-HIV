@@ -10,6 +10,6 @@ class Gejala extends Model
     use HasFactory;
     protected $fillable = [
         'nama_gejala',
-        'kd_gejala',
+        'kode_gejala',
     ];
 }

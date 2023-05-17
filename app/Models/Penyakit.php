@@ -9,5 +9,9 @@ class Penyakit extends Model
 {
     use HasFactory;
 
-    protected $guarded = [' '];
+    protected $fillable = [
+        'nama_penyakit',
+        'kode_penyakit',
+        'solusi'
+    ];
 }
