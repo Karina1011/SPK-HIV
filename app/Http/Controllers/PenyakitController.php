@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Penyakit;
+use App\Models\Gejala;
 use Illuminate\Http\Request;
 
 class PenyakitController extends Controller
@@ -9,7 +10,8 @@ class PenyakitController extends Controller
     public function index()
     {
         $data = [
-            "penyakit" => Penyakit::all()
+            "penyakit" => Penyakit::all(),
+            "gejala"=> Gejala::all()
         ];
         return view("admin.penyakit.index", $data);
     }

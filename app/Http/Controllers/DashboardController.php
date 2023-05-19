@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function dashboard()
     {
-        return view('admin.dashboard.body');
+        return view('admin.dashboard');
     }
 
     public function diagnosa()
@@ -24,5 +25,10 @@ class DashboardController extends Controller
     public function tentang()
     {
         return view('pasien.layouts.tentang');
+    }
+
+    public function tutorial()
+    {
+        return view('pasien.layouts.tutorial');
     }
 }

@@ -25,6 +25,7 @@
                                     <th>No</th>
                                     <th>Nama Gejala</th>
                                     <th>Kode Gejala</th>
+                                    <th>Kode Penyakit</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -34,6 +35,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->nama_gejala }}</td>
                                         <td>{{ $item->kode_gejala }}</td>
+                                        <td>{{ $item->penyakit->kode_penyakit }}</td>
                                         {{-- <td>{!! $item->solusi !!}</td> --}}
                                         <td style="size: 30px;" class="row">
                                             <div class="col-md-4 text-end">
@@ -95,6 +97,15 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group mb-1">
+                        <select class="form-control select2" aria-label="Default select example" name="kode_penyakit"
+                            id="kode_penyakit">
+                            <option selected>Kode penyakit</option>
+                            @foreach ($penyakit as $item)
+                                <option value="{{ $item->id }}">{{ $item->kode_penyakit }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     {{-- <div class="form-group mb-1">
                         <label for="solusi">Solusi</label>
                         {{-- <input type="solusi" class="form-control" name="solusi" id="solusi" @error('solusi') is-invalid @enderror value="{{ old('solusi') }}" required> --}}
@@ -146,13 +157,13 @@
 @section('js')
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    function editgejala(id) {
+    function editGejala(id) {
         let formEdit = document.getElementById("formEdit");
         formEdit.action = formEdit.action + "/" + id
 
         $.ajax(
             {
-                url: "{{ url('/gejala') }}/" + id + "/edit",
+                url: "{{ url('/gejala/edit') }}" + id + "/edit",
                 type: "GET",
                 data: {
                     id: id

@@ -11,5 +11,10 @@ class Gejala extends Model
     protected $fillable = [
         'nama_gejala',
         'kode_gejala',
+        'kode_penyakit'
     ];
+    public function penyakit()
+    {
+        return $this->belongsTo("App\Models\penyakit", "kode_penyakit", "id");
+    }
 }

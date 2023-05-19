@@ -1,9 +1,11 @@
 <div class="menu-inner-shadow"></div>
 
 <ul class="menu-inner py-1">
+
+@if (Auth::user()->role == 'admin'|| Auth::user()->role == 'dokter')
   <!-- Dashboard -->
   <li class="menu-item">
-    <a href="/" class="menu-link">
+    <a href="/dashboard" class="menu-link">
       <i class="menu-icon tf-icons bx bx-home-circle"></i>
       <div data-i18n="Analytics">Dashboard</div>
     </a>
@@ -63,6 +65,8 @@
       <div data-i18n="Documentation">Data Pasien</div>
     </a>
   </li>
+  @endif
+  @if(Auth::user()->role !== 'dokter')
   <li class="menu-item">
     <a href="javascript:void(0);" class="menu-link">
       <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -81,6 +85,7 @@
       <div data-i18n="Support">Pengguna</div>
     </a>
   </li>
+  @endif
   <li class="menu-item">
     <a
       href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"

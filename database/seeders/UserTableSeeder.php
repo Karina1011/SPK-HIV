@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UserTableSeeder extends Seeder
 {
@@ -14,20 +15,23 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = new User;
-        $admin->name = 'ini admin';
-        $admin->usename = 'admin';
-        $admin->email = 'admin@gmil.com';
-        $admin->password = Hash::make ('admin');
-        $admin->save();
-        $admin->roles()->attach(role::where('name','admin')->first());
-
-        $user = new User;
-        $user->name = 'ini user';
-        $user->usename = 'user';
-        $user->email = 'user@gmil.com';
-        $user->password = Hash::make ('password');
-        $user->save();
-        $user->roles()->attach(role::where('name','user')->first());
+        $userData = [
+            [
+                'name'=>'admin',
+                'email'=>'iniadmin@gmail.com',
+                'role'=>'admin',
+                'password'=>bcrypt('123456')
+            ],
+            [
+                'name'=>'dokter',
+                'email'=>'dokter@gmail.com',
+                'role'=>'dokter',
+                'password'=>bcrypt('123456')
+            ],
+        ];
+        
+        foreach($userData as $key => $val){
+            User::create($val);
+        }
     }
 }

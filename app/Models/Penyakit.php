@@ -14,4 +14,10 @@ class Penyakit extends Model
         'kode_penyakit',
         'solusi'
     ];
+    
+    protected $table = "penyakits";
+    public function gejala()
+    {
+        return $this->hasMany(Gejala::class);
+    }
 }
