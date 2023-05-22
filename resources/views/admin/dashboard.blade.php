@@ -132,6 +132,8 @@
         @yield('admin')
         @yield('gejala')
         @yield('Penyakit')
+        @yield('Edukasi')
+        @yield('profil')
 
 <div class="content-backdrop fade"></div>
           </div>

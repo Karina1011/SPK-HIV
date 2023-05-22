@@ -39,7 +39,9 @@
                                         {{-- <td>{!! $item->solusi !!}</td> --}}
                                         <td style="size: 30px;" class="row">
                                             <div class="col-md-4 text-end">
-                                                <button type="button" onclick="editGejala({{ $item->id }})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEdit" class="btn btn-primary fw-bold rounded-pill px-4 shadow float-end">
+                                                <button type="button" onclick="editGejala({{ $item->id }})" class="btn btn-primary" 
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalEdit" 
+                                                    class="btn btn-primary fw-bold rounded-pill px-4 shadow float-end">
                                                     <i class='bx bx-edit'></i>
                                                 </button>
                                             </div>

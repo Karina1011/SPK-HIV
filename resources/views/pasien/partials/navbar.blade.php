@@ -13,11 +13,11 @@
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li class="scroll-to-section"><a href="/" class="active">Beranda</a></li>
-              <li class="scroll-to-section"><a href="/pasien/layouts/tentang">Tentang Kami</a></li>
-              <li class="scroll-to-section"><a href="/pasien/layouts/edukasi">Edukasi Seks</a></li>
-              <li class="scroll-to-section"><a href="/pasien/layouts/tutorial">Tutorial</a></li>
-              <li class="scroll-to-section"><div class="main-red-button"><a href="/konsultasi">Mulai Diagnosa</a></div></li> 
+              <li class="scroll-to-section"><a href="/beranda" class="active">Beranda</a></li>
+              <li class="scroll-to-section"><a href="/tentang">Tentang Kami</a></li>
+              <li class="scroll-to-section"><a href="/edukasi_seks">Edukasi Seks</a></li>
+              <li class="scroll-to-section"><a href="/tutorial">Tutorial</a></li>
+              <li class="scroll-to-section"><div class="main-red-button"><a href="/diagnosa">Mulai Diagnosa</a></div></li> 
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>

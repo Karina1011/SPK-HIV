@@ -22,16 +22,16 @@
     <span class="menu-header-text">Menu</span>
     <li class="menu-item">
     <a
-      href="/data-admin"
+      href="/profil"
       class="menu-link"
     >
       <i class="menu-icon tf-icons bx bx-file"></i>
-      <div data-i18n="Documentation">Data Admin</div>
+      <div data-i18n="Documentation">Profil Admin</div>
     </a>
   </li>
   <li class="menu-item">
     <a
-      href="/"
+      href="/edukasi"
       class="menu-link"
     >
       <i class="menu-icon tf-icons bx bx-file"></i>

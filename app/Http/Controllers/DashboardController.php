@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Edukasi;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -14,12 +15,17 @@ class DashboardController extends Controller
 
     public function diagnosa()
     {
-        return view('pasien.diagnosa.form');
+        return view('pasien.layouts.diagnosa');
+    }
+    public function beranda()
+    {
+        return view('pasien.layouts.beranda');
     }
 
-    public function edukasi()
+    public function edukasi_seks()
     {
-        return view('pasien.layouts.edukasi');
+        $edukasis = Edukasi::query()->get();
+        return view('pasien.layouts.edukasi', compact('edukasis'));
     }
 
     public function tentang()
@@ -30,5 +36,10 @@ class DashboardController extends Controller
     public function tutorial()
     {
         return view('pasien.layouts.tutorial');
+    }
+
+    public function profil()
+    {
+        return view('admin.profil');
     }
 }

@@ -41,7 +41,7 @@
 @include('pasien.partials.navbar');
 
 <div>
-  @yield('home')
+  @yield('beranda')
 </div>
 <div>
   @yield('tentang')
