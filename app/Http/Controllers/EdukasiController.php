@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 use App\Models\Edukasi;
+
+
 class EdukasiController extends Controller
+
 {
     public function index()
     {
@@ -23,7 +29,7 @@ class EdukasiController extends Controller
 
         Edukasi::create([
             'judul' => $request->judul,
-            'isi' => $request->isi,
+            'isi' =>Str::limit($request->isi, 50),
             'image' => $data
         ]);
         return back()->with('berhasil', 'Edukasi Seks baru telah ditambahkan!');
@@ -32,52 +38,50 @@ class EdukasiController extends Controller
     public function edit(Request $request)
     {
         $data = [
-            "edit" => Sexedu::where("id", $request->id)->first()
+            "edit" => Edukasi::where("id", $request->id)->first()
         ];
 
         return view("admin.edukasi.edit", $data);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+        $data = Edukasi::findOrFail($id);
 
-        if($request->file("image_new")) {
+        if($request->file("image")) {
             if ($request->gambarLama) {
                 Storage::delete($request->gambarLama);
             }
 
-            $data = $request->file("image_new")->store("Artikel");
+            $data = $request->file("image")->store("Edukasi");
         }else {
             $data = $request->gambarLama;
         }
 
-        Sexedu::where("id", $request->id)->update([
+        Edukasi::where("id", $request->id)->update([
             'judul' => $request->judul,
             'isi' => $request->isi,
             'image' => $data
         ]);
 
-        return redirect()->route('penyakit.index')->with('success', 'Data Edukasi Seks berhasil ditambahkan!');
+        return back()->with('berhasil', 'Edukasi Seks baru telah ditambahkan!');
     }
 
-    
-    public function destroy($id)
-    { 
-       $data = Edukasi::findorfail($id);
+    public function destroy(Request $request, $id): RedirectResponse
+{ 
+    $data = Edukasi::findorfail($id);
 
-       $file = public_path('./edukasi').$data->image;
+    // Hapus record gambar dari database
+    Storage::delete($request->gambarLama);
+    $data->delete();
 
-       if (file_exists($file)){
-        @unlink($file);
+    // // Hapus file gambar dari penyimpanan
+    // $file = public_path('edukasi' . DIRECTORY_SEPARATOR . $data->image);
+    // if (file_exists($file)) {
+    //     @unlink($file);
+    // }
 
-       }
-       $data->delete();
-       return back();
-        // //delete post
-        // $artikel = artikel::findOrFail($id);
-        // $artikel->delete();
+    return redirect()->route('edukasi.index')->with(['success' => 'Data Berhasil Dihapus!']);
+}
 
-        // //redirect to index
-        // return redirect('/Admin/Artikel')->with(['success' => 'Data Berhasil Dihapus!']);
-    }
 }

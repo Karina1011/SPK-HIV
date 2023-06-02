@@ -15,7 +15,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard anjing</title>
+    <title>Dashboard</title>
 
     <meta name="description" content="" />
 
@@ -134,6 +134,9 @@
         @yield('Penyakit')
         @yield('Edukasi')
         @yield('profil')
+        @yield('dianosa')
+        @yield('Tentang')
+        @yield('Rule')
 
 <div class="content-backdrop fade"></div>
           </div>

@@ -39,7 +39,7 @@ class GejalaController extends Controller
             "edit" => Gejala::where("id", $request->id)->first()
         ];
 
-        return view('Admin.gejala.edit', $data);
+        return view('admin.gejala.edit', $data);
     }
 
     public function update(Request $request)

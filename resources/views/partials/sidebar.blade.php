@@ -3,23 +3,16 @@
 <ul class="menu-inner py-1">
 
 @if (Auth::user()->role == 'admin'|| Auth::user()->role == 'dokter')
-  <!-- Dashboard -->
-  <li class="menu-item">
-    <a href="/dashboard" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-home-circle"></i>
-      <div data-i18n="Analytics">Dashboard</div>
-    </a>
-  </li>
 
   <!-- Layouts -->
   <li class="menu-item">
-    <a href="/user/index" class="menu-link">
+    <a href="/beranda" class="menu-link">
       <i class="menu-icon tf-icons bx bx-layout"></i>
       <div data-i18n="Layouts">Layouts</div>
     </a>
 
   <li class="menu-header small text-uppercase">
-    <span class="menu-header-text">Menu</span>
+    <span class="menu-header-text">Data Master</span>
     <li class="menu-item">
     <a
       href="/profil"
@@ -68,21 +61,32 @@
   @endif
   @if(Auth::user()->role !== 'dokter')
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link">
+    <a href="/rule" class="menu-link">
       <i class="menu-icon tf-icons bx bx-cube-alt"></i>
       <div data-i18n="Misc">Rule/Aturan</div>
     </a>
   </li>
-  <!-- Misc -->
-  <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
+  <!-- Pengaturan -->
+  <li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Pengaturan</span>
+  </li>
   <li class="menu-item">
-    <a
-      href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-      target="_blank"
-      class="menu-link"
-    >
-      <i class="menu-icon tf-icons bx bx-support"></i>
-      <div data-i18n="Support">Pengguna</div>
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bx bx-layout"></i>
+      <div data-i18n="Layouts">Pengaturan</div>
+    </a>
+
+    <ul class="menu-sub">
+  <li class="menu-item">
+    <a href="/tentang" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+      <div data-i18n="Misc">Tentang</div>
+    </a>
+  </li>
+  <li class="menu-item">
+    <a href="/tutorial" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+      <div data-i18n="Misc">Tutorial</div>
     </a>
   </li>
   @endif
@@ -97,5 +101,6 @@
     </a>
   </li>
 </ul>
+</li>
 </aside>
 <!-- / Menu -->

@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_penyakit');
+            $table->string('kode_gejala');
+            $table->string('pertanyaan');
             $table->timestamps();
         });
     }

@@ -8,16 +8,16 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="/" class="logo">
-              <h4>SP - <span>HIV/AIDS</span></h4>
+              <h4>SPK - <span>HIV/AIDS</span></h4>
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li class="scroll-to-section"><a href="/beranda" class="active">Beranda</a></li>
-              <li class="scroll-to-section"><a href="/tentang">Tentang Kami</a></li>
-              <li class="scroll-to-section"><a href="/edukasi_seks">Edukasi Seks</a></li>
-              <li class="scroll-to-section"><a href="/tutorial">Tutorial</a></li>
-              <li class="scroll-to-section"><div class="main-red-button"><a href="/diagnosa">Mulai Diagnosa</a></div></li> 
+              <li class="scroll-to-section"><a href="{{url ('/')}}" class="">Beranda</a></li>
+              <li class="scroll-to-section"><a href="{{url ('/tutorial_apk')}}">Tutorial</a></li>
+              <li class="scroll-to-section"><a href="{{url ('/tentang_apk')}}">Tentang Kami</a></li>
+              <li class="scroll-to-section"><a href="{{url ('/edukasi_seks')}}">Edukasi Seks</a></li>
+              <li class="scroll-to-section"><div class="main-red-button"><a href="{{url ('/diagnosa')}}">Mulai Diagnosa</a></div></li> 
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>

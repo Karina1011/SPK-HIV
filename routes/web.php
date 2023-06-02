@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EdukasiController;
 use App\Http\Controllers\DiagnosaController;
+use App\Http\Controllers\DataTentangController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RuleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +21,10 @@ use App\Http\Controllers\DiagnosaController;
 |
 */
 // login
-Route::middleware(['guest'])->group(function () {
-    Route::get('/',  [LoginController::class, 'login'])->name('login');
-    Route::post('/',  [LoginController::class, 'sesilogin']);  
-});
+// Route::middleware(['guest'])->group(function () {
+//     Route::get('/',  [LoginController::class, 'login'])->name('login');
+//     Route::post('/',  [LoginController::class, 'sesilogin']);  
+// });
 
 Route::middleware(['auth'])->group(function () {
     
@@ -30,12 +33,28 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // layout pasien
-Route::get('/tentang', [dashboardController::class, 'tentang']);
-Route::get('/edukasi_seks', [dashboardController::class, 'edukasi_seks']);
-Route::get('/tutorial', [dashboardController::class, 'tutorial']);
-Route::get('/beranda', [dashboardController::class, 'beranda']);
-Route::get('/diagnosa', [DiagnosaController::class, 'index'])->name('diagnosa');
-Route::post('/diagnosa', [DiagnosaController::class, 'diagnosa'])->name('diagnosa');
+
+//tutorial
+Route::get('/tutorial_apk', [DashboardController::class, 'tutorial_apk'])->name('pasien.layouts');
+
+//data tentang
+Route::get('/tentang_apk', [DashboardController::class, 'tentang_apk']);
+
+//edukasi seks
+Route::get('/edukasi_seks', [DashboardController::class, 'edukasi_seks']);
+Route::resource('/detail', \App\Http\Controllers\DashboardController::class);
+
+// Route::get('/detail', [DashboardController::class, 'detail'])->name('pasien.layouts');
+
+Route::get('/', [DashboardController::class, 'beranda'])->name('pasien.layouts.beranda');
+
+//Diagnosa
+
+Route::get('/diagnosa', [DashboardController::class, 'diagnosa'])->name('diagnosa');
+
+
+//aturan
+Route::resource('/rule', \App\Http\Controllers\RuleController::class);
 
 
 // layout admin
@@ -47,7 +66,19 @@ Route::resource('/penyakit',  \App\Http\Controllers\PenyakitController::class);
 
 Route::resource('/edukasi',  \App\Http\Controllers\EdukasiController::class);
 
+Route::resource('/tentang',  \App\Http\Controllers\DataTentangController::class);
+
+Route::resource('/tutorial',  \App\Http\Controllers\TutorialController::class);
+
 Route::get('/profil', [dashboardController::class, 'profil']);
+
+// tambah users
+Route::get('/users', 'UserController@index');
+Route::get('/users/create', 'UserController@create');
+Route::post('/users', 'UserController@store');
+Route::get('/users/{id}/edit', 'UserController@edit');
+Route::put('/users/{id}', 'UserController@update');
+Route::delete('/users/{id}', 'UserController@destroy');
 
 
 

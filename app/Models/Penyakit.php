@@ -20,4 +20,10 @@ class Penyakit extends Model
     {
         return $this->hasMany(Gejala::class);
     }
+    
+    //diagnosa
+    public function penyakit()
+    {
+        return $this->belongsToMany(Penyakit::class);
+    }
 }

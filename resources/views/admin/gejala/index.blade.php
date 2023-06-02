@@ -115,7 +115,7 @@
                         @error('solusi')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror --}}
-                    {{-- </div> --}} --}}
+                    {{-- </div> --}}
                 </div>
                 <div class="modal-footer d-md-block">
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
