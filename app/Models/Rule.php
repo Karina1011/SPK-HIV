@@ -3,27 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Gejala;
+use App\Models\Penyakit;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 class Rule extends Model
 {
-
+    protected $primaryKey = 'id';
     protected $table = 'rules';
 
-    protected $fillable =[
-        'kode_penyakit',
-        'kode_gejala',
-        'pertanyaan'
-
+    protected $fillable = [
+        'id_penyakit',
+        'daftar_gejala',
     ];
 
     public function gejala()
     {
-        return $this->belongsTo(gejala::class, 'kode_gejala', 'id');
+        return $this->hasMany(Gejala::class, 'id', 'daftar_gejala');
     }
 
     public function penyakit()
     {
-        return $this->belongsTo(penyakit::class, 'kode_penyakit', 'id');
+        return $this->belongsTo(Penyakit::class, 'id_penyakit', 'id');
     }
 }

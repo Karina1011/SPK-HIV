@@ -29,12 +29,24 @@ class DashboardController extends Controller
         $edukasis = Edukasi::query()->get();
         return view('pasien.layouts.edukasi_seks', compact('edukasis'));
     }
-    public function detail(String $id)
-    {
+    // public function detail(String $id)
+    // {
+    //     $edukasi = Edukasi::findOrFail(decrypt($id));
+
+    //     return view('admin.edukasi.detail', compact('edukasi'));
+    // }
+    public function detail($id)
+{
+    try {
         $edukasi = Edukasi::findOrFail(decrypt($id));
 
         return view('admin.edukasi.detail', compact('edukasi'));
+    } catch (\Exception $e) {
+        // Handle the exception, such as logging or displaying an error message
+        return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
+}
+
 
     public function tentang_apk()
     {

@@ -1,31 +1,48 @@
-<input type="hidden" name="id" value="{{ $edit->id }}">
-<div class="form-group">
-    <label>Kode Penyakit</label>
-    <select class="form-control select2 mb-3" aria-label="Default select example" name="kode_penyakit" id="kode_penyakit">
-        <option value="">Pilih kode penyakit {{ $edit->penyakit->penyakit}}</option>
-        @foreach ($penyakits as $item)
-            <option value="{{ $item->id }}">{{ $item->kode_penyakit }}</option>
-        @endforeach
-    </select>
-</div>
+@foreach ($rules as $rule)
+<div class="modal fade" id="exampleModalEdit{{ $rule->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ $rule->id }}"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 50%">
+            <div class="modal-content">
+                <div class="modal-header hader">
+                    <h3 class="modal-title" id="exampleModalLabel{{ $rule->id }}">
+                        Edit Data Gejala
+                    </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url('/admin/Rule', $rule->id) }}" method="POST" >
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body" id="modal-content-edit">
 
-<div class="form-group">
-    <label>Kode Gejala</label>
-    <select class="form-control select2 mb-2" aria-label="Default select example" name="kode_gejala" id="kode_gejala">
-        <option value="">Pilih kode gejala{{ $edit->gejala->gejala }}</option>
-        @foreach ($gejalas as $item)
-            <option value="{{ $item->id }}">{{ $item->kode_gejala }}</option>
-        @endforeach
-    </select>
-</div>
-<div class="form-group">
-    <label>Pertanyaan</label>
-    <input type="text" name="pertanyaan" id="ubah"
-        class="form-control @error('pertanyaan') is-invalid @enderror" value="{{ $edit->pertanyaan }}" required>
-    @error('pertanyaan')
-        <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-</div>
-<script>
-    CKEDITOR.replace('ubah');
-</script>
+                        <div class="form-group mb-1">
+                            <label for="kode_penyakit" class="form-label mb-2">Pilih Kode Penyakit</label>
+                            <select class="form-select mb-3" aria-label="id_penyakit" name="id_penyakit"
+                                id="id_penyakit">
+                                @foreach ($penyakits as $item)
+                                    <option value="{{ $item->id }}" @if($item->id == $rule->kode_penyakit) selected @endif>
+                                        {{ $item->nama_penyakit }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form mb-1">
+                            <label for="daftar_gejala">Pilih Kode Gejala</label>
+                            @foreach ($gejalas as $gejala)
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="daftar_gejala[]"
+                                        value="{{ $gejala->id }}" id="gejala_{{ $gejala->id }}" @if (in_array($gejala->id, explode(',', $rule->daftar_gejala))) checked @endif>
+                                    <label for="gejala_{{ $gejala->id }}" class="form-check-label">
+                                        {{ $gejala->nama_gejala }} [ {{ $gejala->kd_gejala }} ]
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer d-md-block">
+                        <button type="submit" class="btn btn-success btn-sm">Simpan</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach

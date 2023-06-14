@@ -51,11 +51,11 @@
   </li>
   <li class="menu-item">
     <a
-      href="/Pasien"
+      href="/pengguna"
       class="menu-link"
     >
       <i class="menu-icon tf-icons bx bx-file"></i>
-      <div data-i18n="Documentation">Data Pasien</div>
+      <div data-i18n="Documentation">Data Pengguna</div>
     </a>
   </li>
   @endif

@@ -11,17 +11,27 @@ return new class extends Migration
      *
      * @return void
      */
+    // public function up()
+    // {
+    //     Schema::create('rules', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('id_penyakit');
+    //         $table->string('daftar_gejala');
+    //         $table->timestamps();
+    //     });
+    // }
     public function up()
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_penyakit');
-            $table->string('kode_gejala');
-            $table->string('pertanyaan');
-            $table->timestamps();
+            // $table->string('kd_penyakit');
+            // $table->string('kd_gejala');
+
+            $table->foreignId('id_penyakit')->constrained('penyakits')->onDelete('cascade');
+            $table->string('daftar_gejala');
+            $table->timestamps(); 
         });
     }
-
     /**
      * Reverse the migrations.
      *

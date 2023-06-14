@@ -128,15 +128,12 @@
 
         @include('partials.sidebar')
         @include('partials.navbar')   
-        @yield('pengguna')
-        @yield('admin')
-        @yield('gejala')
-        @yield('Penyakit')
-        @yield('Edukasi')
-        @yield('profil')
-        @yield('dianosa')
-        @yield('Tentang')
-        @yield('Rule')
+        <div>
+          @yield('container')
+        </div>
+
+        
+
 
 <div class="content-backdrop fade"></div>
           </div>

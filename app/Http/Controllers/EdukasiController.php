@@ -35,6 +35,7 @@ class EdukasiController extends Controller
         return back()->with('berhasil', 'Edukasi Seks baru telah ditambahkan!');
     }
     
+    
     public function edit(Request $request)
     {
         $data = [

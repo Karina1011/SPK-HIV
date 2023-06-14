@@ -9,6 +9,7 @@ use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\DataTentangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RuleController;
+use App\Http\Controllers\PenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/dashboard',  [dashboardController::class, 'dashboard']);
     Route::get('/logout', [LoginController::class, 'logout']);  
+    
 });
 
 // layout pasien
@@ -42,7 +44,10 @@ Route::get('/tentang_apk', [DashboardController::class, 'tentang_apk']);
 
 //edukasi seks
 Route::get('/edukasi_seks', [DashboardController::class, 'edukasi_seks']);
-Route::resource('/detail', \App\Http\Controllers\DashboardController::class);
+// // Route::get('/detail', \App\Http\Controllers\DashboardController::class, 'detail');
+// Route::get('/edukasi/{id}', [EdukasiController::class, 'detail'])->name('edukasi.detail');
+
+Route::get('/edukasi/detail/{id}', [DashboardController::class, 'detail'])->name('edukasi.detail');
 
 // Route::get('/detail', [DashboardController::class, 'detail'])->name('pasien.layouts');
 
@@ -55,7 +60,8 @@ Route::get('/diagnosa', [DashboardController::class, 'diagnosa'])->name('diagnos
 
 //aturan
 Route::resource('/rule', \App\Http\Controllers\RuleController::class);
-
+Route::get("/rule/edit", [RuleController::class, "edit"]);
+Route::put("/rule/simpan", [RuleController::class, "update"]);
 
 // layout admin
 Route::resource('/gejala',  \App\Http\Controllers\GejalaController::class);
@@ -69,6 +75,8 @@ Route::resource('/edukasi',  \App\Http\Controllers\EdukasiController::class);
 Route::resource('/tentang',  \App\Http\Controllers\DataTentangController::class);
 
 Route::resource('/tutorial',  \App\Http\Controllers\TutorialController::class);
+
+Route::resource('/pengguna',  \App\Http\Controllers\PenggunaController::class);
 
 Route::get('/profil', [dashboardController::class, 'profil']);
 
