@@ -15,10 +15,6 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard');
     }
-    public function diagnosa()
-    {
-        return view('diagnosa.index');
-    }
     public function beranda()
     {
         return view('pasien.layouts.beranda');

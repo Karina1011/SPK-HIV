@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Edukasi;
-
+use Illuminate\Http\RedirectResponse;
 
 class EdukasiController extends Controller
-
 {
     public function index()
     {
@@ -23,19 +22,21 @@ class EdukasiController extends Controller
 
     public function store(Request $request)
     {
-        if($request->file("image")) {
+        $data = null;
+
+        if ($request->file("image")) {
             $data = $request->file("image")->store("Edukasi");
         }
 
         Edukasi::create([
             'judul' => $request->judul,
-            'isi' =>Str::limit($request->isi, 50),
+            'isi' => $request->isi,
             'image' => $data
         ]);
+
         return back()->with('berhasil', 'Edukasi Seks baru telah ditambahkan!');
     }
-    
-    
+
     public function edit(Request $request)
     {
         $data = [
@@ -49,40 +50,31 @@ class EdukasiController extends Controller
     {
         $data = Edukasi::findOrFail($id);
 
-        if($request->file("image")) {
+        if ($request->file("image")) {
             if ($request->gambarLama) {
                 Storage::delete($request->gambarLama);
             }
 
-            $data = $request->file("image")->store("Edukasi");
-        }else {
-            $data = $request->gambarLama;
+            $data->image = $request->file("image")->store("Edukasi");
         }
 
-        Edukasi::where("id", $request->id)->update([
-            'judul' => $request->judul,
-            'isi' => $request->isi,
-            'image' => $data
-        ]);
+        $data->judul = $request->judul;
+        $data->isi = $request->isi;
+        $data->save();
 
-        return back()->with('berhasil', 'Edukasi Seks baru telah ditambahkan!');
+        return back()->with('berhasil', 'Edukasi Seks baru telah diperbarui!');
     }
 
     public function destroy(Request $request, $id): RedirectResponse
-{ 
-    $data = Edukasi::findorfail($id);
+    {
+        $data = Edukasi::findOrFail($id);
 
-    // Hapus record gambar dari database
-    Storage::delete($request->gambarLama);
-    $data->delete();
+        if ($request->gambarLama) {
+            Storage::delete($request->gambarLama);
+        }
 
-    // // Hapus file gambar dari penyimpanan
-    // $file = public_path('edukasi' . DIRECTORY_SEPARATOR . $data->image);
-    // if (file_exists($file)) {
-    //     @unlink($file);
-    // }
+        $data->delete();
 
-    return redirect()->route('edukasi.index')->with(['success' => 'Data Berhasil Dihapus!']);
-}
-
+        return redirect()->route('edukasi.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
 }

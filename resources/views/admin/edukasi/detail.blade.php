@@ -9,16 +9,12 @@
                 <div class="card mb-3">
                   <img src="{{ asset('/storage/'.$edukasi['image']) }}" alt="image" width="50px">
                   <div class="card-body">
-                    <h5 class="card-title">Subjudul Artikel</h5>
-                    <p class="card-text">Deskripsi singkat artikel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                      dignissim lectus et sem fermentum, et lacinia metus suscipit.</p>
+                    <h5 class="card-title">{{ $edukasi->judul }}</h5>
                   </div>
                 </div>
-            
-                <h3>Isi Artikel</h3>
+                {{-- <h3>Isi Artikel</h3> --}}
                 <p>{!! $edukasi->isi !!}</p>
-            
-                <a href="index.html" class="btn btn-primary mt-4">Kembali ke Daftar Artikel</a>
+                <a href="{{ url('/edukasi_seks')}}"class="btn btn-danger mt-4">Kembali ke Daftar Edukasi</a>
               </div>
             </div>
         </div>

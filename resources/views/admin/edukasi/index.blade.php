@@ -33,8 +33,8 @@
                                 @foreach ($edukasi as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->judul }}</td>
-                                        <td>{!! $item->isi !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->judul, 30) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->isi, 50) !!}</td>
                                         <td><img src="{{ asset('/storage/' . $item->image) }}" alt="image" width="60"></td>
                                         <td style="size: 30px;" class="row">
                                             <div class="col-md-4 text-end">
@@ -173,5 +173,9 @@
         );
     }
 </script>
+<script>
+    CKEDITOR.replace('isi');
+</script>
+<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 
 @endsection

@@ -9,7 +9,7 @@
                     </h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ url('/admin/Rule', $rule->id) }}" method="POST" >
+                <form action="{{ url('/admin/rule', $rule->id) }}" method="POST" >
                     @csrf
                     @method('PUT')
                     <div class="modal-body" id="modal-content-edit">
@@ -31,7 +31,7 @@
                                     <input type="checkbox" class="form-check-input" name="daftar_gejala[]"
                                         value="{{ $gejala->id }}" id="gejala_{{ $gejala->id }}" @if (in_array($gejala->id, explode(',', $rule->daftar_gejala))) checked @endif>
                                     <label for="gejala_{{ $gejala->id }}" class="form-check-label">
-                                        {{ $gejala->nama_gejala }} [ {{ $gejala->kd_gejala }} ]
+                                        {{ $gejala->nama_gejala }} [ {{ $gejala->kode_gejala }} ]
                                     </label>
                                 </div>
                             @endforeach

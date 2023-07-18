@@ -35,7 +35,7 @@ class DataTentangController extends Controller
 
         Tentang::create([
             'judul' => $request->judul,
-            'isi' =>Str::limit($request->isi, 5),
+            'isi' =>$request->isi,
             'image' => $data
         ]);
         

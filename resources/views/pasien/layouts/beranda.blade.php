@@ -12,7 +12,7 @@
                 <p>Website Sistem Pendukung Keputusan (SPK) untuk Mendiagnosa Penyakit HIV/AIDS menggunakan Forward 
                   Chaining adalah sebuah platform online yang dirancang untuk membantu pengguna dalam melakukan diagnosis
                   awal terkait penyakit HIV/AIDS.
-                  <a rel="" href="{{url('/tentang')}}" target="_parent">Baca selengkapnya...</a>.</p>
+                  <a rel="" href="{{url('/tentang_apk')}}" target="_parent">Baca selengkapnya...</a>.</p>
               </div>
             </div>
             <div class="col-lg-6">
