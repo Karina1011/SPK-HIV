@@ -1,9 +1,9 @@
-@extends('admin.dashboard')
+@extends('partials.main')
 @section('container')
-
+<title>SPK-HIV | Tabel Pengguna</title>
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tabel /</span> Gejala</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tabel /</span> Pengguna</h4>
         <!-- Content wrapper -->
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">

@@ -1,14 +1,14 @@
 @extends('partials.main')
 @section('container')
-<title>SPK-HIV | Tabel Penyakit</title>
+<title>SPK-HIV | Tabel Gejala</title>
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tabel /</span> Penyakit</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tabel /</span> Gejala</h4>
         <!-- Content wrapper -->
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="card">
-                    <h5 class="card-header">Tabel Penyakit</h5>
+                    <h5 class="card-header">Tabel Gejala</h5>
                         <hr class="m-0" />
                         <div class="card-body">
                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalTambah"> + Tambah</button>
@@ -23,29 +23,27 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Penyakit</th>
-                                    <th>Kode Penyakit</th>
-                                    <th>Solusi</th>
+                                    <th>Nama Gejala</th>
+                                    <th>Kode Gejala</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penyakit as $item)
+                                @foreach ($gejala as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->nama_penyakit, 30) !!}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->kode_penyakit, 5) !!}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 45) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->nama_gejala, 30) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->kode_gejala, 5) !!}</td>
                                         <td style="size: 30px;" class="row">
                                             <td style="size: 30px;" class="row">
                                                 <div class="col-md-4 text-end">
-                                                    <button type="button" onclick="editPenyakit({{ $item->id }})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEdit" class="btn btn-primary fw-bold rounded-pill px-4 shadow float-end">
+                                                    <button type="button" onclick="editGejala({{ $item->id }})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEdit" class="btn btn-primary fw-bold rounded-pill px-4 shadow float-end">
                                                         <i class='bx bx-edit'></i>
                                                     </button>
                                                 </div>
                                             
                                                 <div class="col-md-4 text-start">
-                                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');" action="{{ route('penyakit.destroy', $item->id) }}" method="POST">
+                                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');" action="{{ route('gejala.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger" type="submit">
@@ -64,64 +62,57 @@
         </div>
     </div>
 </div>
-{{-- modal tambah data_penyakit --}}
+<!-- Modal tambah gejala -->
 <div class="modal fade" id="exampleModalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content p-3">
             <div class="modal-header hader">
                 <h3 class="modal-title" id="exampleModalLabel">
-                    Tambah Data Penyakit
+                    Tambah Data Gejala
                 </h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ url('/penyakit') }}" method="POST">
+            <form action="{{ url('/gejala') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group mb-1">
-                        <label for="nama_penyakit">Nama Penyakit</label>
-                        {{-- <input type="text" class="form-control" name="nama_penyakit" placeholder="" @error('nama_penyakit') is-invalid @enderror value="{{ old('nama_penyakit') }}" required> --}}
-                        <input type="text" name="nama_penyakit" class="form-control @error('nama_penyakit') is-invalid @enderror" value="{{ old('nama_penyakit') }}" required>
-                        @error('nama_penyakit')
+                        <label for="nama_gejala">Nama Gejala</label>
+                        <input type="text" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required>
+                        @error('nama_gejala')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group mb-1">
-                        <label for="kode_penyakit">Kode Penyakit</label>
-                        <input type="text" class="form-control" name="kode_penyakit" id="kode_penyakit"
-                            placeholder="Input Kode Penyakit" 
-                            @error('kode_penyakit') is-invalid @enderror value="{{ old('kode_penyakit') }}" required>
-                        @error('kode_penyakit')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-1">
-                        <label for="solusi">Solusi</label>
-                        {{-- <input type="solusi" class="form-control" name="solusi" id="solusi" @error('solusi') is-invalid @enderror value="{{ old('solusi') }}" required> --}}
-                        <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" rows="3" placeholder="Masukan artikel">{{ old('solusi') }}</textarea>
-                        @error('solusi')
+                        <label for="kode_gejala">Kode Gejala</label>
+                        <input type="text" class="form-control" name="kode_gejala" id="kode_gejala"
+                            placeholder="Input Kode Gejala" 
+                            @error('kode_gejala') is-invalid @enderror value="{{ old('kode_gejala') }}" required>
+                        @error('kode_gejala')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="modal-footer d-md-block">
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
-                    <button type="button" class="btn btn-danger btn-sm">Batal</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Batal</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<!-- Selesai -->
+
 <!-- Modal Edit -->
 <div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog">
         <div class="modal-content p-3">
             <div class="modal-header hader">
                 <h3 class="modal-title" id="exampleModalLabel">
-                    Edit Data Penyakit
+                    Edit Data Gejala
                 </h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ url('/penyakit') }}" method="POST" id="formEdit">
+            <form action="{{ url('/gejala') }}" method="POST" id="formEdit">
                 @method('PUT')
                 @csrf
                 <div class="modal-body" id="modal-content-edit">
@@ -137,27 +128,27 @@
 <!-- Selesai -->
 <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>\
 <script>
-    CKEDITOR.replace('solusi');
+    CKEDITOR.replace('nama_gejala');
 </script>
-
 @endsection
+
 
 @section('js')
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    function editPenyakit(id) {
+    function editGejala(id) {
         let formEdit = document.getElementById("formEdit");
         formEdit.action = formEdit.action + "/" + id
 
         $.ajax(
             {
-                url: "{{ url('/penyakit') }}/" + id + "/edit",
+                url: "{{ url('/gejala') }}/" + id + "/edit",
                 type: "GET",
                 data: {
                     id: id
                 },
-                success: function(data_penyakit) {
-                    $("#modal-content-edit").html(data_penyakit);
+                success: function(data_gejala) {
+                    $("#modal-content-edit").html(data_gejala);
                     return true;
                 }
             }

@@ -1,5 +1,5 @@
-@extends('admin.dashboard')
-@section('pengguna')
+@extends('partials.main')
+@section('container')
  
  <!-- Bootstrap Table with Header - Dark -->
  <!-- Content wrapper -->

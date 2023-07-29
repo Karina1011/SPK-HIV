@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EdukasiController;
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\DataTentangController;
+use App\Http\Controllers\RiwayatDiagnosaController;
 // use App\Http\Controllers\UserController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\PenggunaController;
@@ -47,23 +48,27 @@ Route::get('/tentang_apk', [DashboardController::class, 'tentang_apk']);
 Route::get('/edukasi_seks', [DashboardController::class, 'edukasi_seks']);
 Route::resource('/edukasi',  \App\Http\Controllers\EdukasiController::class);
 Route::get('/edukasi/detail/{id}', [DashboardController::class, 'detail'])->name('edukasi.detail');
-// // Route::get('/detail', \App\Http\Controllers\DashboardController::class, 'detail');
-// Route::get('/edukasi/{id}', [EdukasiController::class, 'detail'])->name('edukasi.detail');
 
-// Route::get('/detail', [DashboardController::class, 'detail'])->name('pasien.layouts');
-
+//Beranda
 Route::get('/', [DashboardController::class, 'beranda'])->name('pasien.layouts.beranda');
 
-//Diagnosa
-// routes/web.php
+//Riwayat Diagnosa
+Route::get('/riwayat', [RiwayatDiagnosaController::class, 'index'])->name('riwayat.index');
+Route::delete('/riwayat/{id}', [RiwayatDiagnosaController::class, 'destroy'])->name('riwayat.destroy');
+Route::get('/riwayat/{id}/edit', [RiwayatDiagnosaController::class, 'edit'])->name('riwayat.edit');
+
+// Diagnosa
+Route::get('/diagnosa', [DiagnosaController::class, 'index'])->name('diagnosa.index');
+Route::post('/diagnosa', [DiagnosaController::class, 'proses'])->name('diagnosa.proses');
+Route::get('/diagnosa/hasil', [DiagnosaController::class, 'hasil'])->name('diagnosa.hasil');
 
 // Route::get('/diagnosa', 'DiagnosaController@index')->name('diagnosa.index');
 // Route::post('/diagnosa', 'DiagnosaController@store')->name('diagnosa.store');
-Route::post('/diagnosa/proses', [DiagnosaController::class, 'proses'])->name('diagnosa.proses');
-Route::get('/layouts/diagnosa/{id?}', [DiagnosaController::class, 'index'])->name('layouts.diagnosa.index');
-Route::get('/layouts/diagnosa/hasil', [DiagnosaController::class, 'hasil'])->name('layouts.diagnosa.hasil');
-Route::get('/download-pdf/{id}', [DiagnosaController::class, 'downloadPDF'])->name('download.pdf');
-Route::get('/diagnosa/selesai', [DiagnosaController::class, 'selesai'])->name('diagnosa.selesai');
+// Route::post('/diagnosa/proses', [DiagnosaController::class, 'proses'])->name('diagnosa.proses');
+// Route::get('/layouts/diagnosa/{id?}', [DiagnosaController::class, 'index'])->name('layouts.diagnosa.index');
+// Route::get('/layouts/diagnosa/hasil', [DiagnosaController::class, 'hasil'])->name('layouts.diagnosa.hasil');
+// Route::get('/download-pdf/{id}', [DiagnosaController::class, 'downloadPDF'])->name('download.pdf');
+// Route::get('/diagnosa/selesai', [DiagnosaController::class, 'selesai'])->name('diagnosa.selesai');
 
 //data_pasien
 Route::get('/pasien', [PasienController::class, 'index']);

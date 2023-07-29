@@ -1,4 +1,5 @@
-@extends('admin.dashboard')
+@extends('partials.main')
+<title>SPK-HIV | Tabel Rule</title>
 @section('container')
 <main id="main" class="main">
     <div class="content-wrapper">

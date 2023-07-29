@@ -1,6 +1,6 @@
-@extends('admin.dashboard')
+@extends('partials.main')
 @section('container')
-
+<title>SPK-HIV | Tabel Gejala</title>
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tabel /</span> Gejala</h4>
@@ -25,7 +25,6 @@
                                     <th>No</th>
                                     <th>Nama Gejala</th>
                                     <th>Kode Gejala</th>
-                                    <th>Kode Penyakit</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -33,10 +32,8 @@
                                 @foreach ($gejala as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->nama_gejala }}</td>
-                                        <td>{{ $item->kode_gejala }}</td>
-                                        <td>{{ $item->penyakit->kode_penyakit }}</td>
-                                        {{-- <td>{!! $item->solusi !!}</td> --}}
+                                        <td>{!! \Illuminate\Support\Str::limit($item->nama_gejala, 30) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->kode_gejala, 5) !!}</td>
                                         <td style="size: 30px;" class="row">
                                             <div class="col-md-4 text-end">
                                                 <button type="button" onclick="editGejala({{ $item->id }})" class="btn btn-primary" 
@@ -85,7 +82,7 @@
                     <div class="form-group mb-1">
                         <label for="nama_gejala">Nama gejala</label>
                         {{-- <input type="text" class="form-control" name="nama_gejala" placeholder="" @error('nama_gejala') is-invalid @enderror value="{{ old('nama_gejala') }}" required> --}}
-                        <input type="text" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required>
+                        <input type="text" id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required>
                         @error('nama_gejala')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -99,23 +96,6 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group mb-1">
-                        <select class="form-control select2" aria-label="Default select example" name="kode_penyakit"
-                            id="kode_penyakit">
-                            <option selected>Kode penyakit</option>
-                            @foreach ($penyakit as $item)
-                                <option value="{{ $item->id }}">{{ $item->kode_penyakit }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    {{-- <div class="form-group mb-1">
-                        <label for="solusi">Solusi</label>
-                        {{-- <input type="solusi" class="form-control" name="solusi" id="solusi" @error('solusi') is-invalid @enderror value="{{ old('solusi') }}" required> --}}
-                        {{-- <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" rows="3" placeholder="Masukan artikel">{{ old('solusi') }}</textarea>
-                        @error('solusi')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror --}}
-                    {{-- </div> --}}
                 </div>
                 <div class="modal-footer d-md-block">
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
@@ -149,11 +129,6 @@
     </div>
 </div>
 <!-- Selesai -->
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>\
-{{-- <script>
-    CKEDITOR.replace('solusi');
-</script> --}}
-
 @endsection
 
 @section('js')

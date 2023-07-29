@@ -15,12 +15,7 @@ class Penyakit extends Model
         'solusi'
     ];
     
-    protected $table = "penyakits";
-    public function gejala()
-    {
-        return $this->hasMany(Gejala::class);
-    }
-    
+    protected $table = "penyakits";    
     //diagnosa
     public function penyakit()
     {

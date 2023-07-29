@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Penyakit;
-use App\Models\Gejala;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PenyakitController extends Controller
@@ -11,7 +11,6 @@ class PenyakitController extends Controller
     {
         $data = [
             "penyakit" => Penyakit::all(),
-            "gejala"=> Gejala::all()
         ];
         return view("admin.penyakit.index", $data);
     }
@@ -21,7 +20,7 @@ class PenyakitController extends Controller
         $this->validate($request, [
             'nama_penyakit' => 'required',
             'kode_penyakit' => 'required',
-            'solusi' => 'required|min:5'
+            'solusi' => 'required',
         ]);
 
         Penyakit::create([

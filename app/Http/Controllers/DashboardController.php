@@ -6,14 +6,29 @@ use Illuminate\Http\Request;
 use App\Models\Edukasi;
 use App\Models\Tentang;
 use App\Models\Tutorial;
+use App\Models\Gejala;
+use App\Models\Penyakit;
+use App\Models\Rule;
+use App\Models\User;
+use App\Models\RiwayatDiagnosa;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB; // Import DB facade untuk menggunakan fungsi DATE_FORMAT
+
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        // Menghitung jumlah data pada tabel menggunakan Eloquent
+        $jumlah_rule = Rule::count();
+        $jumlah_gejala = Gejala::count();
+        $jumlah_penyakit = Penyakit::count();
+        $jumlah_user = User::count();
+        $jumlah_riwayat = RiwayatDiagnosa::count();
+        $jumlah_edukasi = Edukasi::count();
+
+        return view('admin.dashboard', compact('jumlah_rule', 'jumlah_gejala', 'jumlah_penyakit', 'jumlah_user', 'jumlah_riwayat', 'jumlah_edukasi'));
     }
     public function beranda()
     {
@@ -58,6 +73,47 @@ class DashboardController extends Controller
 
     public function profil()
     {
-        return view('admin.profil');
+        return view('admin.profile.profil');
+    }
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (Hash::check($request->current_password, $user->password)) {
+            $user->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+
+            return response()->json(['message' => 'Password successfully updated']);
+        } else {
+            return response()->json(['error' => 'Current password is incorrect'], 422);
+        }
+    }
+
+    public function changePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:800',
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $fileName = time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('admin/assets/img/avatars'), $fileName);
+
+            // Update user's photo in the database
+            $user->update(['photo' => $fileName]);
+
+            return response()->json(['message' => 'Photo successfully updated']);
+        } else {
+            return response()->json(['error' => 'Photo not found'], 422);
+        }
     }
 }

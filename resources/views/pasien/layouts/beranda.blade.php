@@ -13,7 +13,8 @@
                   Chaining adalah sebuah platform online yang dirancang untuk membantu pengguna dalam melakukan diagnosis
                   awal terkait penyakit HIV/AIDS.
                   <a rel="" href="{{url('/tentang_apk')}}" target="_parent">Baca selengkapnya...</a>.</p>
-              </div>
+                  <li class="scroll-to-section"><div class="main-red-button"><a href="{{url ('/pasien')}}">Mulai Diagnosa</a></div></li> 
+                </div>
             </div>
             <div class="col-lg-6">
               <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">

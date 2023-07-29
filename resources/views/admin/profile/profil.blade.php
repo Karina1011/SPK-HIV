@@ -1,5 +1,5 @@
-@extends('admin.dashboard')
-@section('profil')
+@extends('partials.main')
+@section('container')
 
 <!-- Content wrapper -->
 <div class="content-wrapper">

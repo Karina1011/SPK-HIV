@@ -26,6 +26,6 @@ class PasienController extends Controller
         $request->session()->put('id', $pasien->id);
         $request->session()->put('nama', $pasien->nama);
 
-        return redirect('/layouts/diagnosa')->with('success', 'Data berhasil disimpan');
+        return redirect('/diagnosa')->with('success', 'Data berhasil disimpan');
     }
 }

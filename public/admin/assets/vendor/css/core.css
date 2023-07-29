@@ -46,7 +46,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.53;
   --bs-body-color: #697a8d;
-  --bs-body-bg: ##fff8f0;
+  --bs-body-bg: #ffff;
 }
 
 *,
@@ -5108,7 +5108,7 @@ textarea.form-control-lg {
 
 .popover-body {
   padding: 1.125rem 1.125rem;
-  color: #697a8d;
+  color: #ffffff;
 }
 
 .carousel {
@@ -15235,6 +15235,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   flex: 1 1 auto;
   align-items: stretch;
   padding: 0;
+  background-color: #ffff;
 }
 .layout-without-menu .layout-page {
   padding-right: 0 !important;
