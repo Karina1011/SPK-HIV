@@ -5,7 +5,7 @@ use App\Http\Controllers\PenyakitController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EdukasiController;
-use App\Http\Controllers\DiagnosaController;
+use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\DataTentangController;
 use App\Http\Controllers\RiwayatDiagnosaController;
 // use App\Http\Controllers\UserController;
@@ -58,25 +58,15 @@ Route::delete('/riwayat/{id}', [RiwayatDiagnosaController::class, 'destroy'])->n
 Route::get('/riwayat/{id}/edit', [RiwayatDiagnosaController::class, 'edit'])->name('riwayat.edit');
 
 // Diagnosa
-Route::get('/diagnosa', [DiagnosaController::class, 'index'])->name('diagnosa.index');
-Route::post('/diagnosa', [DiagnosaController::class, 'proses'])->name('diagnosa.proses');
-Route::get('/diagnosa/hasil', [DiagnosaController::class, 'hasil'])->name('diagnosa.hasil');
+Route::get('/diagnosa', [DiagnosisController::class, 'index'])->name('diagnosa.index');
+Route::post('/diagnosa', [DiagnosisController::class, 'proses'])->name('diagnosa.proses');
+Route::get('/diagnosa/hasil', [DiagnosisController::class, 'hasil'])->name('diagnosa.hasil');
+Route::get('/diagnosa/hasil/download-pdf', [DiagnosisController::class, 'unduhPDF'])->name('diagnosa.hasil.download');
 
-// Route::get('/diagnosa', 'DiagnosaController@index')->name('diagnosa.index');
-// Route::post('/diagnosa', 'DiagnosaController@store')->name('diagnosa.store');
-// Route::post('/diagnosa/proses', [DiagnosaController::class, 'proses'])->name('diagnosa.proses');
-// Route::get('/layouts/diagnosa/{id?}', [DiagnosaController::class, 'index'])->name('layouts.diagnosa.index');
-// Route::get('/layouts/diagnosa/hasil', [DiagnosaController::class, 'hasil'])->name('layouts.diagnosa.hasil');
-// Route::get('/download-pdf/{id}', [DiagnosaController::class, 'downloadPDF'])->name('download.pdf');
-// Route::get('/diagnosa/selesai', [DiagnosaController::class, 'selesai'])->name('diagnosa.selesai');
 
 //data_pasien
 Route::get('/pasien', [PasienController::class, 'index']);
 Route::post('/pasien/daftar', [PasienController::class, 'daftar'])->name('pasien.daftar');
-
-
-
-
 
 //aturan
 Route::resource('/rule', \App\Http\Controllers\RuleController::class);

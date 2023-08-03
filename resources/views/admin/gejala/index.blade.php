@@ -80,9 +80,12 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group mb-1">
-                        <label for="nama_gejala">Nama gejala</label>
+                        {{-- <label for="nama_gejala">Nama gejala</label> --}}
                         {{-- <input type="text" class="form-control" name="nama_gejala" placeholder="" @error('nama_gejala') is-invalid @enderror value="{{ old('nama_gejala') }}" required> --}}
-                        <input type="text" id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required>
+                        {{-- <input type="text" id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required> --}}
+                        
+                        <label class="form-label">Example textarea</label>
+                        <textarea id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required></textarea>
                         @error('nama_gejala')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

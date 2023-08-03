@@ -34,7 +34,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->judul, 30) !!}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->isi, 50) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->isi, 30) !!}</td>
                                         <td><img src="{{ asset('/storage/' . $item->image) }}" alt="image" width="60"></td>
                                         <td style="size: 30px;" class="row">
                                             <div class="col-md-4 text-end">

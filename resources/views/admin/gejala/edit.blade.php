@@ -1,8 +1,7 @@
 <input type="hidden" name="id" value="{{ $edit->id }}">
 <div class="form-group mb-1">
     <label for="edit_nama_gejala">Nama Gejala</label>
-    <textarea rows="5" id="edit_nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" required>
-        {{ strip_tags($edit->nama_gejala) }}
+    <textarea rows="5" id="edit_nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" required>{!!($edit->nama_gejala)!!}
     </textarea>
     @error('nama_gejala')
         <div class="alert alert-danger">{{ $message }}</div>

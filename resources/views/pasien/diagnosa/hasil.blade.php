@@ -14,7 +14,7 @@
                     <fieldset>
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex justify-content-between w-100">
-                               
+
                             </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="nama-pasien">Nama Pasien</label>
@@ -36,20 +36,18 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="tgl_diagnosa">Tanggal Diagnosa</label>
-                                        <textarea class="form-control" id="tgl_diagnosa" readonly>{{ now()->format('d-m-Y H:i:s') }}</textarea>
+                                        <textarea class="form-control" id="tgl_diagnosa" readonly>{{ $tanggalDiagnosa }}</textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="deskripsi-penyakit">Deskripsi Penyakit</label>
-                                        <textarea class="form-control" id="deskripsi-penyakit" readonly>{{ $penyakit->deskripsi }}</textarea>
+                                        <div class="alert alert-dark mb-0" role="alert" id="deskripsi-penyakit">{{ $penyakit->deskripsi }}</div>
                                     </div>
                                     <div class="mb-5">
                                         <label class="form-label" for="penanganan-penyakit">Penanganan</label>
-                                        <input type="text" class="form-control" id="penanganan-penyakit" value="{{ $penyakit->solusi }}" readonly />
-                                        
+                                        <div class="alert alert-dark mb-" role="alert" id="penanganan-penyakit">{!!($penyakit->solusi)!!}</div>
                                     </div>
                                 @else
-                                <div class="alert alert-danger" role="alert"> Maaf, sitem tidak dapat mendiagnosa penyakit. Jika anda mengalami gejala-gejala yang aneh
-                                    disarankan untuk konsultasi ke dokter
+                                <div class="alert alert-danger" role="alert"> Maaf, sistem tidak dapat mendiagnosa penyakit. Jika Anda mengalami gejala-gejala yang aneh, disarankan untuk berkonsultasi ke dokter.
                                 </div>
                                 @endif
 
@@ -75,14 +73,23 @@
                                         </div>
                                     </div>
                                 @else
-                                <div class="alert alert-danger" role="alert"> Belum ada gejala yang dipilih
+                                <div class="alert alert-danger" role="alert"> Belum ada gejala yang dipilih.
                                 </div>
                                 @endif
+                                <div class="alert alert-danger" role="alert"> "Penting untuk diingat bahwa hasil diagnosa dari sistem pendukung keputusan hanya 
+                                    sebagai panduan dan bukan pengganti keputusan medis atau keputusan penting lainnya yang harus diambil. Selalu konsultasikan hasil 
+                                    ini dengan tenaga medis atau ahli yang berkualifikasi sebelum membuat keputusan akhir mengenai perawatan atau langkah-langkah tindakan 
+                                    selanjutnya. Ketepatan dan keselamatan keputusan tergantung pada informasi yang lengkap dan pemahaman yang komprehensif atas situasi yang dihadapi. 
+                                    Gunakan hasil diagnosa ini sebagai sarana pendukung untuk memperoleh pandangan yang lebih holistik dan bijaksana."
+                                </div>
                         </div>
                     </fieldset>
                     <br>
                     <div class="text-center">
                         <a href="{{ url('/pasien') }}" class="btn btn-danger"><i class="fa fa-times"></i> Selesai</a>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ route('diagnosa.hasil.download') }}" class="btn btn-primary"><i class="fa fa-download"></i> Unduh PDF</a>
                     </div>
                 </div>
             </div>

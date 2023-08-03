@@ -26,6 +26,7 @@
                                     <th>Nama Penyakit</th>
                                     <th>Kode Penyakit</th>
                                     <th>Solusi</th>
+                                    <th>Deskripsi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -35,7 +36,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->nama_penyakit, 30) !!}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->kode_penyakit, 5) !!}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 45) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 30) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 30) !!}</td>
                                         <td style="size: 30px;" class="row">
                                             <td style="size: 30px;" class="row">
                                                 <div class="col-md-4 text-end">
@@ -99,6 +101,14 @@
                         {{-- <input type="solusi" class="form-control" name="solusi" id="solusi" @error('solusi') is-invalid @enderror value="{{ old('solusi') }}" required> --}}
                         <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" rows="3" placeholder="Masukan artikel">{{ old('solusi') }}</textarea>
                         @error('solusi')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-1">
+                        <label for="deskripsi">Deskripsi</label>
+                        {{-- <input type="deskripsi" class="form-control" name="deskripsi" id="deskripsi" @error('deskripsi') is-invalid @enderror value="{{ old('deskripsi') }}" required> --}}
+                        <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" id="deskripsi" rows="3" placeholder="Masukan artikel">{{ old('deskripsi') }}</textarea>
+                        @error('deskripsi')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>

@@ -21,12 +21,14 @@ class PenyakitController extends Controller
             'nama_penyakit' => 'required',
             'kode_penyakit' => 'required',
             'solusi' => 'required',
+            'deskripsi' => 'required',
         ]);
 
         Penyakit::create([
             'nama_penyakit' => $request->nama_penyakit,
             'kode_penyakit' => $request->kode_penyakit,
             'solusi' => $request->solusi,
+            'deskripsi' => $request->deskripsi,
         ]);
         return redirect()->route('penyakit.index')->with('success', 'Data penyakit berhasil ditambahkan!');
     }
@@ -45,6 +47,7 @@ class PenyakitController extends Controller
             'nama_penyakit' => $request->nama_penyakit,
             'kode_penyakit' => $request->kode_penyakit,
             'solusi' => $request->solusi,
+            'deskripsi' => $request->deskripsi,
         ]);
 
         return back()->with('success', 'Data Penyakit berhasil diupdate');

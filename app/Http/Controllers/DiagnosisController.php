@@ -9,8 +9,10 @@ use App\Models\Rule;
 use App\Models\Pasien;
 use App\Models\RiwayatDiagnosa;
 use Illuminate\Support\Facades\Session;
+use Dompdf\Dompdf;
+use Carbon\Carbon;
 
-class DiagnosaController extends Controller
+class DiagnosisController extends Controller
 {
     public function index()
     {
@@ -123,48 +125,54 @@ class DiagnosaController extends Controller
         // Ambil data pasien dari sesi
         $pasienId = $request->session()->get('id');
         $pasien = Pasien::find($pasienId);
-
+    
         // Ambil data penyakit berdasarkan penyakit yang terdeteksi
         $penyakitId = $request->session()->get('penyakit_id');
         $penyakit = null; // Inisialisasi variabel $penyakit dengan nilai awal null
         if ($penyakitId) {
             $penyakit = Penyakit::find($penyakitId);
         }
+    
         // Ambil data gejala yang telah dipilih
         $gejalaIds = $request->session()->get('jawaban_all', []);
-
+    
         // Konversi $gejalaIds menjadi array jika masih dalam bentuk koleksi
         if ($gejalaIds instanceof \Illuminate\Support\Collection) {
             $gejalaIdsArray = $gejalaIds->toArray();
         } else {
             $gejalaIdsArray = $gejalaIds;
         }
-
+    
         // Periksa apakah ada penyakit yang terdeteksi
         if ($penyakitId === null) {
             // Berikan pesan bahwa penyakit tidak bisa diindikasi
-            $pesanTidakBisaDiindikasi = 'Penyakit tidak bisa diindikasi berdasarkan gejala yang dipilih.';
-            
-            // Hapus sesi jawaban_all dan penyakit_id karena tidak ada hasil diagnosa
-            $request->session()->forget('jawaban_all');
-            $request->session()->forget('penyakit_id');
-
+             $pesanTidakBisaDiindikasi = 'Penyakit tidak bisa diindikasi berdasarkan gejala yang dipilih.';
+    
             // Tampilkan halaman hasil dengan pesan kesalahan
             return view('pasien.diagnosa.hasil', compact('pesanTidakBisaDiindikasi', 'pasien', 'gejalaIds', 'penyakit'));
         }
-
-        // Simpan hasil diagnosa ke dalam riwayat diagnosa
-        $gejalaTerpilih = implode(',', $gejalaIdsArray);
-        $this->simpanRiwayatDiagnosa($pasienId, $penyakitId, $gejalaTerpilih);
-
+    
+        // Simpan hasil diagnosa ke dalam variabel $hasilDiagnosa
+        $hasilDiagnosa = [
+            'penyakit' => $penyakit,
+            'gejalaIds' => $gejalaIdsArray,
+            'tanggalDiagnosa' => Carbon::now('Asia/Jakarta')->format('d-m-Y H:i:s'),
+            'pasien' => $pasien, // Sertakan variabel $pasien dalam data yang dikompak
+        ];
+    
+        // Simpan hasil diagnosa dalam sesi untuk digunakan pada halaman hasil_pdf
+        $request->session()->put('hasil_diagnosa', $hasilDiagnosa);
+    
         // Hapus sesi jawaban_all dan penyakit_id setelah diagnosa selesai
         $request->session()->forget('jawaban_all');
         $request->session()->forget('penyakit_id');
-
-        // Tampilkan halaman hasil dengan gejala yang sudah dipilih
-        return view('pasien.diagnosa.hasil', compact('penyakit', 'pasien', 'gejalaIds'));                                                       
-    }
     
+        // Simpan hasil diagnosa ke dalam tabel riwayat diagnosa
+        $this->simpanRiwayatDiagnosa($pasienId, $penyakitId, implode(',', $gejalaIdsArray));
+    
+        // Tampilkan halaman hasil dengan gejala yang sudah dipilih
+        return view('pasien.diagnosa.hasil', $hasilDiagnosa);
+    }
     
     private function simpanRiwayatDiagnosa($pasienId, $penyakitId, $gejalaTerpilih)
     {
@@ -175,6 +183,31 @@ class DiagnosaController extends Controller
         $riwayatDiagnosa->tanggal_diagnosa = now();
         $riwayatDiagnosa->save();
     }
+    public function unduhPDF(Request $request)
+    {
+        
+        // Ambil data hasil diagnosa dari sesi
+        $hasilDiagnosa = $request->session()->get('hasil_diagnosa');
+    
+        // Cek apakah ada data hasil diagnosa
+        if (!$hasilDiagnosa) {
+            return redirect()->route('diagnosa.index')->with('error', 'Data diagnosa tidak ditemukan.');
+        }
+        // Ambil data pasien dari sesi
+        $pasienId = $request->session()->get('id');
+        $pasien = Pasien::find($pasienId);
+    
+        // Render view dalam bentuk HTML menggunakan method view() dan kirimkan data hasil diagnosa ke view
+        $pdfHTML = view('pasien.diagnosa.hasil_pdf', compact('hasilDiagnosa'))->render();
+    
+        // Buat PDF
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($pdfHTML);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+    
+        // Unduh file PDF
+        return $dompdf->stream('hasil_diagnosa.pdf');
+    }
     
 }
-

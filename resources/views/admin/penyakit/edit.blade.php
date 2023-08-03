@@ -22,6 +22,13 @@
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 </div>
+<div class="form-group mb-1">
+    <label for="deskripsi">Deskripsi</label>
+    <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" id="edit" rows="3" placeholder="Masukan artikel">{{ old('deskripsi', $edit->deskripsi) }}</textarea>
+    @error('deskripsi')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+</div>
 <script>
     CKEDITOR.replace('edit');
 </script>

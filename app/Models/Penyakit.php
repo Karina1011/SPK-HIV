@@ -12,7 +12,8 @@ class Penyakit extends Model
     protected $fillable = [
         'nama_penyakit',
         'kode_penyakit',
-        'solusi'
+        'solusi',
+        'deskripsi'
     ];
     
     protected $table = "penyakits";    
