@@ -100,9 +100,6 @@
             <div class="mb-3 form-password-toggle">
               <div class="d-flex justify-content-between">
                 <label class="form-label" for="password">Password</label>
-                <a href="auth-forgot-password-basic.html">
-                  <small>Forgot Password?</small>
-                </a>
               </div>
               <div class="input-group input-group-merge">
                 <input
@@ -117,13 +114,6 @@
               </div>
             </div>
             <div class="mb-3">
-              <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
               <div class="mb-3">
                 <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
               </div>

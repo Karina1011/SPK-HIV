@@ -122,4 +122,9 @@
         dihadapi. Gunakan hasil diagnosa ini sebagai sarana pendukung untuk memperoleh pandangan yang lebih holistik dan bijaksana."
     </div>
 </body>
+<script>
+    function unduhDetailRiwayat(id) {
+        window.open("{{ route('riwayat.unduhDetail', '') }}/" + id, '_blank');
+    }
+</script>
 </html>

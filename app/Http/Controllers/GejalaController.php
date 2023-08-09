@@ -10,7 +10,7 @@ class GejalaController extends Controller
     public function index()
     {
         $data = [
-            "gejala" => Gejala::all(),
+            "gejala" => Gejala::paginate(5),
         ];
         return view("admin.gejala.index", $data);
     }

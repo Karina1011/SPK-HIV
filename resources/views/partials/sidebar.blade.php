@@ -24,13 +24,13 @@
   <li class="menu-header small text-uppercase">
     <span class="menu-header-text">Data Master </span>
       <!-- Profile -->
-    <li class="menu-item">
+    {{-- <li class="menu-item">
     <a href="/profil"
       class="menu-link">
       <i class="menu-icon tf-icons bx bx-file"></i>
       <div data-i18n="Documentation">Profil Admin</div>
     </a>
-  </li>
+  </li> --}}
 
   <li class="menu-item">
     <a href="{{ url ('/gejala')}}"
@@ -80,26 +80,25 @@
       <div data-i18n="Documentation">Edukasi Seks</div>
     </a>
   </li>
-  <!-- Pengaturan -->
-  <li class="menu-header small text-uppercase">
-    <span class="menu-header-text">Pengaturan</span>
-  </li>
-  <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
-      <i class="menu-icon tf-icons bx bx-layout"></i>
-      <div data-i18n="Layouts">Pengaturan</div>
-    </a>
+<!-- Pengaturan -->
+<li class="menu-header small text-uppercase">
+  <span class="menu-header-text">Pengaturan</span>
+</li>
+<li class="menu-item">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bx bx-layout"></i>
+    <div data-i18n="Layouts">Pengaturan</div>
+  </a>
 
-    <ul class="menu-sub">
-  <li class="menu-item">
-    <a href="/tentang" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-      <div data-i18n="Misc">Tentang</div>
-    </a>
-  </li>
+  <ul class="menu-sub">
+<li class="menu-item">
+  <a href="/tentang" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+    <div data-i18n="Misc">Tentang</div>
+  </a>
+</li>
   @endif <!-- Menutup kondisi untuk role admin atau dokter -->
 </ul>
-
 @if (Auth::user()->role == 'admin' || Auth::user()->role == 'dokter')
 <li class="menu-item">
   <a href="{{ url('/logout') }}" class="menu-link" id="logout-btn">

@@ -56,6 +56,8 @@ Route::get('/', [DashboardController::class, 'beranda'])->name('pasien.layouts.b
 Route::get('/riwayat', [RiwayatDiagnosaController::class, 'index'])->name('riwayat.index');
 Route::delete('/riwayat/{id}', [RiwayatDiagnosaController::class, 'destroy'])->name('riwayat.destroy');
 Route::get('/riwayat/{id}/edit', [RiwayatDiagnosaController::class, 'edit'])->name('riwayat.edit');
+Route::get('/riwayat/{id}/detail', [RiwayatDiagnosaController::class, 'showDetail'])->name('riwayat.showDetail');
+Route::get('/riwayat/unduh-detail/{id}', [RiwayatDiagnosaController::class, 'unduhDetailRiwayat'])->name('riwayat.unduhDetail');
 
 // Diagnosa
 Route::get('/diagnosa', [DiagnosisController::class, 'index'])->name('diagnosa.index');

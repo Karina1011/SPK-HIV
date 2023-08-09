@@ -7,9 +7,6 @@
         <div class="card">
             <h5 class="card-header">Tabel Riwayat Diagnosa</h5>
             <hr class="m-0">
-            <div class="card-body">
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalTambah"> + Tambah</button>
-            </div>
             @if (session('berhasil'))
                 <div class="alert alert-success">
                     {{ session('berhasil') }}
@@ -22,56 +19,72 @@
                             <th>No</th>
                             <th>Nama Pasien</th>
                             <th>Nama Penyakit</th>
-                            <th>Gejala Terpilih</th>
                             <th>Tanggal Diagnosa</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($riwayatDiagnosa as $item)
+                        @php
+                            $pageNumber = ($riwayatDiagnosa->currentPage() - 1) * $riwayatDiagnosa->perPage();
+                        @endphp 
+                        @foreach ($riwayatDiagnosa->reverse() as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ ++$pageNumber }}</td>
                                 <td>{{ $item->pasien->nama }}</td>
                                 <td>{{ $item->penyakit->nama_penyakit }}</td>
-                                <td>{!! \Illuminate\Support\Str::limit($item->gejala_terpilih, 20) !!}</td>
-                                <td>{{ $item->tanggal_diagnosa->format('d-m-Y') }}</td>
+                                <td>{{ $item->tanggal_diagnosa->format('d-m-Y H:i') }} WIB</td>
                                 <td style="size: 20px;" class="row">
                                     <div class="col-md-2 text-start">
-                                        <form onsubmit="return confirm('Apakah anda yakin ?');" action="{{ route('riwayat.destroy', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger" type="submit">
-                                                <i class="bx bxs-trash" style="color:white;"></i> Hapus
-                                            </button>
-                                        </form>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDetail" onclick="lihatDetailRiwayat('{{ $item->id }}')">
+                                            <i class="bx bx-show" style="color:white;"></i> Detail
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 text-start">
+                                        <button class="btn btn-primary" onclick="unduhDetailRiwayat('{{ $item->id }}')">
+                                            <i class="bx bx-download" style="color:white;"></i> Unduh
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <br>
+                {{ $riwayatDiagnosa->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
 </div>
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<!-- Modal Detail Riwayat Diagnosa -->
+<div class="modal" tabindex="-1" id="modalDetail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail Riwayat Diagnosa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content-detail"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    function editRiwayatDiagnosa(id) {
-        let formEdit = document.getElementById("formEdit");
-        formEdit.action = "{{ route('riwayat.index') }}" + "/" + id;
-
+    function lihatDetailRiwayat(id) {
         $.ajax({
-            url: "{{ url('/riwayat') }}/" + id + "/edit",
+            url: "{{ route('riwayat.showDetail', ':id') }}".replace(':id', id),
             type: "GET",
-            data: {
-                id: id
-            },
             success: function(data_riwayatDiagnosa) {
-                $("#modal-content-edit").html(data_riwayatDiagnosa);
-                return true;
+                $("#modal-content-detail").html(data_riwayatDiagnosa);
+                $('#modalDetail').modal('show');
             }
         });
+    }
+
+    function unduhDetailRiwayat(id) {
+        window.open("{{ route('riwayat.unduhDetail', ':id') }}".replace(':id', id), '_blank');
     }
 </script>
 @endsection

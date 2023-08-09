@@ -31,13 +31,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $pageNumber = ($penyakit->currentPage() - 1) * $penyakit->perPage();
+                            @endphp
                                 @foreach ($penyakit as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->nama_penyakit, 30) !!}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->kode_penyakit, 5) !!}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 30) !!}</td>
-                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 30) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->solusi, 20) !!}</td>
+                                        <td>{!! \Illuminate\Support\Str::limit($item->deskripsi, 20) !!}</td>
                                         <td style="size: 30px;" class="row">
                                             <td style="size: 30px;" class="row">
                                                 <div class="col-md-4 text-end">
@@ -60,6 +63,8 @@
                                 @endforeach
                             </tbody>        
                         </table>
+                        <br>
+                    {{ $penyakit->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
@@ -67,7 +72,7 @@
     </div>
 </div>
 {{-- modal tambah data_penyakit --}}
-<div class="modal fade" id="exampleModalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" tabindex="-1" id="exampleModalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content p-3">
             <div class="modal-header hader">
@@ -115,14 +120,14 @@
                 </div>
                 <div class="modal-footer d-md-block">
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
-                    <button type="button" class="btn btn-danger btn-sm">Batal</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Batal</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Modal Edit -->
-<div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" tabindex="-1" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog">
         <div class="modal-content p-3">
             <div class="modal-header hader">
@@ -138,41 +143,39 @@
                 </div>
                 <div class="modal-footer d-md-block">
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
-                    <button type="button" class="btn btn-danger btn-sm">Batal</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Batal</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Selesai -->
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>\
-<script>
-    CKEDITOR.replace('solusi');
-</script>
-
-@endsection
-
-@section('js')
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('solusi');
+    });
+
     function editPenyakit(id) {
         let formEdit = document.getElementById("formEdit");
-        formEdit.action = formEdit.action + "/" + id
+        formEdit.action = "{{ url('/penyakit') }}/" + id;
 
-        $.ajax(
-            {
-                url: "{{ url('/penyakit') }}/" + id + "/edit",
-                type: "GET",
-                data: {
-                    id: id
-                },
-                success: function(data_penyakit) {
-                    $("#modal-content-edit").html(data_penyakit);
-                    return true;
-                }
+        $.ajax({
+            url: "{{ url('/penyakit') }}/" + id + "/edit",
+            type: "GET",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $("#modal-content-edit").html(data);
+                return true;
             }
-        );
+        });
     }
-</script>
 
+    $('#exampleModalEdit').on('hidden.bs.modal', function () {
+        $("#modal-content-edit").html("");
+    });
+</script>
 @endsection

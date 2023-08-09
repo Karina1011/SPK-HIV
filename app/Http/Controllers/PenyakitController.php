@@ -10,7 +10,7 @@ class PenyakitController extends Controller
     public function index()
     {
         $data = [
-            "penyakit" => Penyakit::all(),
+            "penyakit" => Penyakit::paginate(5),
         ];
         return view("admin.penyakit.index", $data);
     }

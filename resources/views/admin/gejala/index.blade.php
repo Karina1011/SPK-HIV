@@ -29,9 +29,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $pageNumber = ($gejala->currentPage() - 1) * $gejala->perPage();
+                            @endphp
                                 @foreach ($gejala as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ ++$pageNumber }}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->nama_gejala, 30) !!}</td>
                                         <td>{!! \Illuminate\Support\Str::limit($item->kode_gejala, 5) !!}</td>
                                         <td style="size: 30px;" class="row">
@@ -61,13 +64,15 @@
                             </tbody>        
                         </table>
                     </div>
+                    <br>
+                    {{ $gejala->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 {{-- modal tambah data_gejala --}}
-<div class="modal fade" id="exampleModalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" tabindex="-1" id="exampleModalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content p-3">
             <div class="modal-header hader">
@@ -84,8 +89,8 @@
                         {{-- <input type="text" class="form-control" name="nama_gejala" placeholder="" @error('nama_gejala') is-invalid @enderror value="{{ old('nama_gejala') }}" required> --}}
                         {{-- <input type="text" id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required> --}}
                         
-                        <label class="form-label">Example textarea</label>
-                        <textarea id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" required></textarea>
+                        <label class="form-label">Nama Gejala</label>
+                        <textarea rows="5" id="nama_gejala" name="nama_gejala" class="form-control @error('nama_gejala') is-invalid @enderror" value="{{ old('nama_gejala') }}" placeholder="Masukan Nama gejala" required></textarea>
                         @error('nama_gejala')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -93,7 +98,7 @@
                     <div class="form-group mb-1">
                         <label for="kode_gejala">Kode gejala</label>
                         <input type="text" class="form-control" name="kode_gejala" id="kode_gejala"
-                            placeholder="Input Kode gejala" 
+                            placeholder="Masukan Kode gejala" 
                             @error('kode_gejala') is-invalid @enderror value="{{ old('kode_gejala') }}" required>
                         @error('kode_gejala')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -109,10 +114,10 @@
     </div>
 </div>
 <!-- Modal Edit -->
-<div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-        <div class="modal-content p-3">
-            <div class="modal-header hader">
+<div class="modal" tabindex="-1" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
                 <h3 class="modal-title" id="exampleModalLabel">
                     Edit Data gejala
                 </h3>
