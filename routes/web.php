@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EdukasiController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\DataTentangController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RiwayatDiagnosaController;
 // use App\Http\Controllers\UserController;
 use App\Http\Controllers\RuleController;
@@ -30,11 +31,27 @@ use App\Http\Controllers\PasienController;
 // });
 
 Route::middleware(['auth'])->group(function () {
-    
-    Route::get('/dashboard',  [dashboardController::class, 'dashboard']);
-    Route::get('/logout', [LoginController::class, 'logout']);  
-    
+    Route::get('/dashboard', [dashboardController::class, 'dashboard']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // Route::get('/diagnosa', [PasienController::class, 'diagnosa']);
+
+    // Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+
+    Route::get('/diagnosa', [DiagnosisController::class, 'index'])->name('diagnosa.index');
+    Route::post('/diagnosa/proses', [DiagnosisController::class, 'proses'])->name('diagnosa.proses');
+    Route::get('/diagnosa/hasil', [DiagnosisController::class, 'hasil'])->name('diagnosa.hasil');
+    Route::get('/diagnosa/hasil/download', [DiagnosaController::class, 'unduhPDF'])->name('diagnosa.hasil.download');
+
+    Route::get('/riwayat', [RiwayatDiagnosaController::class, 'index'])->name('riwayat.index');
+    Route::delete('/riwayat/{id}', [RiwayatDiagnosaController::class, 'destroy'])->name('riwayat.destroy');
+    Route::get('/riwayat/{id}/edit', [RiwayatDiagnosaController::class, 'edit'])->name('riwayat.edit');
+    Route::get('/riwayat/{id}/detail', [RiwayatDiagnosaController::class, 'showDetail'])->name('riwayat.showDetail');
+    Route::get('/riwayat/unduh-detail/{id}', [RiwayatDiagnosaController::class, 'unduhDetailRiwayat'])->name('riwayat.unduhDetail');
+    Route::get('/riwayat-pasien/{pasienId}', [RiwayatDiagnosaController::class, 'riwayat_pasien'])->name('riwayat_pasien');
+
 });
+
 
 // layout pasien
 
@@ -50,20 +67,18 @@ Route::resource('/edukasi',  \App\Http\Controllers\EdukasiController::class);
 Route::get('/edukasi/detail/{id}', [DashboardController::class, 'detail'])->name('edukasi.detail');
 
 //Beranda
-Route::get('/', [DashboardController::class, 'beranda'])->name('pasien.layouts.beranda');
-
+Route::get('/', [DashboardController::class, 'berandapasien'])->name('pasien.layouts.berandapasien');
+Route::get('/beranda', [DashboardController::class, 'beranda'])->name('pasien.layouts.beranda');
 //Riwayat Diagnosa
-Route::get('/riwayat', [RiwayatDiagnosaController::class, 'index'])->name('riwayat.index');
-Route::delete('/riwayat/{id}', [RiwayatDiagnosaController::class, 'destroy'])->name('riwayat.destroy');
-Route::get('/riwayat/{id}/edit', [RiwayatDiagnosaController::class, 'edit'])->name('riwayat.edit');
-Route::get('/riwayat/{id}/detail', [RiwayatDiagnosaController::class, 'showDetail'])->name('riwayat.showDetail');
-Route::get('/riwayat/unduh-detail/{id}', [RiwayatDiagnosaController::class, 'unduhDetailRiwayat'])->name('riwayat.unduhDetail');
+
 
 // Diagnosa
-Route::get('/diagnosa', [DiagnosisController::class, 'index'])->name('diagnosa.index');
-Route::post('/diagnosa', [DiagnosisController::class, 'proses'])->name('diagnosa.proses');
-Route::get('/diagnosa/hasil', [DiagnosisController::class, 'hasil'])->name('diagnosa.hasil');
-Route::get('/diagnosa/hasil/download-pdf', [DiagnosisController::class, 'unduhPDF'])->name('diagnosa.hasil.download');
+// Route::get('/diagnosa', [DiagnosisController::class, 'index'])->name('diagnosa.index');
+// Route::post('/diagnosa', [DiagnosisController::class, 'proses'])->name('diagnosa.proses');
+// Route::get('/diagnosa/hasil', [DiagnosisController::class, 'hasil'])->name('diagnosa.hasil');
+// Route::get('/diagnosa/hasil/download-pdf', [DiagnosisController::class, 'unduhPDF'])->name('diagnosa.hasil.download');
+
+
 
 
 //data_pasien

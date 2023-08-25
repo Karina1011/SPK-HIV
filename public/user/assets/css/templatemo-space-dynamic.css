@@ -1727,7 +1727,7 @@ form#contact {
 }
 
 form#contact2 {
-  margin-left: 30px;
+  margin-left: 0px;
   position: relative;
   background: linear-gradient(105deg, rgb(254,71,67) 0%, rgb(254,63,64) 100%);
   padding: 60px 30px;
@@ -1791,6 +1791,7 @@ form#contact button {
 }
 
 form#contact2 button {
+  margin: 5px;
   display: inline-block;
   background-color: #fff;
   font-size: 15px;

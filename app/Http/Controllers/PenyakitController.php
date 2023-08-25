@@ -38,7 +38,7 @@ class PenyakitController extends Controller
             "edit" => Penyakit::where("id", $request->id)->first()
         ];
 
-        return view('Admin.penyakit.edit', $data);
+        return view('admin.penyakit.edit', $data);
     }
 
     public function update(Request $request)

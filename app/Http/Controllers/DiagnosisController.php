@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Gejala;
 use App\Models\Penyakit;
 use App\Models\Rule;
@@ -16,40 +17,40 @@ class DiagnosisController extends Controller
 {
     public function index()
     {
-        $pasien = null;
+        $user = auth()->user();
+    
+        if (!$user) {
+            return redirect()->route('login'); 
+        }
+    
+        $pasienId = Session::get('id');
+        $pasien = Pasien::find($pasienId);
+    
         $riwayatDiagnosa = null;
         $penyakit = null;
-        
-        // Cek apakah data pasien ada di session berdasarkan 'id'
-        $pasien = null;
-        $pasienId = Session::get('id');
-        if ($pasienId) {
-            $pasien = Pasien::find($pasienId);
-        }
-
+    
         $diagnosis = [
             'gejala_id' => null,
             'penyakit_id' => null,
             'nama_gejala' => '',
+        ];
     
-         ];
-
         try {
             // Cek apakah ada gejala yang tersedia di database
             $gejala = Gejala::firstOrFail();  
-        
-
+    
             $diagnosis['gejala_id'] = $gejala->id;
             $diagnosis['nama_gejala'] = $gejala->nama_gejala;
         } catch (\Exception $e) {
             // Berikan nilai default atau pesan kesalahan jika data gejala tidak ditemukan
             $diagnosis['nama_gejala'] = 'Data gejala tidak tersedia';
         }
-
+    
         return view('pasien.diagnosa.index', compact('diagnosis', 'pasien', 'riwayatDiagnosa'));
     }
+    
 
-     public function proses(Request $request)
+    public function proses(Request $request)
     {
         $gejalaId = $request->input('gejala_id');
         $penyakitId = $request->input('penyakit_id');
@@ -93,37 +94,75 @@ class DiagnosisController extends Controller
         return view('pasien.diagnosa.index', compact('diagnosis', 'jawaban_all'));
     }
 
+    private function cariPenyakitDariAturan($gejalaTerpilih)
+    {
+        // Ambil semua aturan (rule) dari database
+        $rules = Rule::all();
+    
+        // Inisialisasi array untuk menyimpan penyakit yang sesuai
+        $penyakitCocok = [];
+    
+        // Lakukan iterasi pada setiap aturan
+        foreach ($rules as $rule) {
+            // Pisahkan daftar gejala pada aturan menjadi array
+            $daftarGejalaRule = explode(' ', $rule->daftar_gejala);
+    
+            // Hitung berapa banyak gejala yang sesuai dengan gejala yang dipilih oleh pasien
+            $jumlahGejalaCocok = count(array_intersect($daftarGejalaRule, $gejalaTerpilih));
+    
+            // batas minimal berapa banyak gejala yang harus sesuai untuk memicu indikasi penyakit
+            $batasMinimalCocok = 5;
+    
+            if (in_array('1', $gejalaTerpilih) && in_array('2', $gejalaTerpilih)) {
+                // Pasien terindikasi penyakit dengan ID 1
+                return '1';
+            }
+    
+            if ($jumlahGejalaCocok >= $batasMinimalCocok) {
+                // Jika memenuhi batas minimal, tambahkan kode penyakit pada array penyakitCocok
+                $penyakitCocok[] = $rule->penyakit->id; // Menggunakan relasi untuk mendapatkan id penyakit
+            }
+        }
+    
+        // Jika ada penyakit yang cocok, ambil salah satu penyakit pertama
+        if (!empty($penyakitCocok)) {
+            return $penyakitCocok[0];
+        }
+    
+        return null; // Tidak ada penyakit yang cocok
+    }    
+
     private function cariPenyakitYangCocok($gejalaIds)
     {
-        // Periksa aturan (rule) berdasarkan daftar gejala yang dipilih
-        $penyakitMungkin = collect(); // Daftar penyakit yang mungkin diderita
-        $rules = Rule::all(); // Ambil semua aturan
-
+        $penyakitMungkin = collect();
+        $rules = Rule::all();
+    
         foreach ($rules as $rule) {
             $daftarGejalaRule = explode(',', $rule->daftar_gejala);
-            if (count(array_diff($daftarGejalaRule, $gejalaIds)) === 0) {
-                // Semua gejala pada aturan cocok dengan gejala yang dipilih
+            $jumlahGejalaCocok = count(array_intersect($daftarGejalaRule, $gejalaIds));
+            
+            $persentaseKesamaan = ($jumlahGejalaCocok / count($daftarGejalaRule)) * 100;
+    
+            $batasPersentaseRelevansi = 80;
+    
+            if ($persentaseKesamaan >= $batasPersentaseRelevansi) {
                 $penyakit = Penyakit::find($rule->id_penyakit);
                 if ($penyakit) {
                     $penyakitMungkin->push($penyakit);
                 }
             }
         }
-
-        // Ambil penyakit yang paling mungkin berdasarkan jumlah aturan yang cocok
-        $penyakitTerpilih = $penyakitMungkin->sortByDesc(function ($penyakit) use ($rules) {
-            return $rules->filter(function ($rule) use ($penyakit) {
-                return $rule->id_penyakit === $penyakit->id;
-            })->count();
+    
+        $penyakitTerpilih = $penyakitMungkin->sortByDesc(function ($penyakit) use ($persentaseKesamaan) {
+            return $persentaseKesamaan;
         })->first();
-
+    
         return $penyakitTerpilih ? $penyakitTerpilih->id : null;
     }
-
+    
     public function hasil(Request $request)
     {
-        // Ambil data pasien dari sesi
-        $pasienId = $request->session()->get('id');
+        $pasienId = $request->session()->get('id_' . Auth::id());
         $pasien = Pasien::find($pasienId);
     
         // Ambil data penyakit berdasarkan penyakit yang terdeteksi
@@ -173,6 +212,7 @@ class DiagnosisController extends Controller
         // Tampilkan halaman hasil dengan gejala yang sudah dipilih
         return view('pasien.diagnosa.hasil', $hasilDiagnosa);
     }
+
     
     private function simpanRiwayatDiagnosa($pasienId, $penyakitId, $gejalaTerpilih)
     {
@@ -187,19 +227,19 @@ class DiagnosisController extends Controller
     {
         
         // Ambil data hasil diagnosa dari sesi
-        $hasilDiagnosa = $request->session()->get('hasil_diagnosa');
+        $hasilDiagnosa = $request->session()->get('hasil_diagnosa', 'pasien');
     
         // Cek apakah ada data hasil diagnosa
         if (!$hasilDiagnosa) {
             return redirect()->route('diagnosa.index')->with('error', 'Data diagnosa tidak ditemukan.');
         }
-        // Ambil data pasien dari sesi
-        $pasienId = $request->session()->get('id');
-        $pasien = Pasien::find($pasienId);
+       // Ambil data pasien dari sesi
+       $pasienId = Session::get('id_' . Auth::id());
+       $pasien = Pasien::find($pasienId);
     
-        // Render view dalam bentuk HTML menggunakan method view() dan kirimkan data hasil diagnosa ke view
-        $pdfHTML = view('pasien.diagnosa.hasil_pdf', compact('hasilDiagnosa'))->render();
-    
+       // Render view dalam bentuk HTML menggunakan method view() dan kirimkan data hasil diagnosa ke view
+        $pdfHTML = view('pasien.diagnosa.hasil_pdf', compact('hasilDiagnosa', 'pasien'))->render();
+
         // Buat PDF
         $dompdf = new Dompdf();
         $dompdf->loadHtml($pdfHTML);

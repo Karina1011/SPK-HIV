@@ -117,6 +117,12 @@
               <div class="mb-3">
                 <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
               </div>
+              <p class="text-center">
+                <span>Belum memiliki akun?</span>
+                <a href="{{ route('register') }}">
+                    <span>Silahkan daftar di sini</span>
+                </a>
+            </p> 
             </form>
             </div>
         </div>

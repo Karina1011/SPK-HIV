@@ -2,16 +2,17 @@
 @section('container')
 <title>SPK-HIV | Tabel Penyakit</title>
 <div class="content-wrapper">
+    <!-- Konten utama -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tabel /</span> Penyakit</h4>
-        <!-- Content wrapper -->
+        <!-- Konten wrapper -->
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="card">
                     <h5 class="card-header">Tabel Penyakit</h5>
-                        <hr class="m-0" />
-                        <div class="card-body">
-                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalTambah"> + Tambah</button>
+                    <hr class="m-0" />
+                    <div class="card-body">
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalTambah"> + Tambah</button>
                     </div>
                     @if (session('berhasil'))
                     <div class="alert alert-success">

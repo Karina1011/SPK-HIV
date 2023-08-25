@@ -27,12 +27,20 @@ class LoginController extends Controller
              'password' => $request->password
          ];
  
-         if(Auth::attempt($infologin)){
-             return redirect('/dashboard');
-             exit();
-         } else {
-             return redirect('')->withErrors('Email dan Password yang dimasukan tidak sesuia')->withInput();
-         }
+         if (Auth::attempt($infologin)) {
+            $user = Auth::user();
+
+            // Periksa peran pengguna yang berhasil login
+            if ($user->role == 'pasien') {
+                return redirect('/beranda'); 
+            } elseif ($user->role == 'admin') {
+                return redirect('/dashboard');
+            } elseif ($user->role == 'dokter') {
+                return redirect('/dashboard');
+            }
+        } else {
+            return redirect('')->withErrors('Email dan Password yang dimasukan tidak sesuai')->withInput();
+        }
      }
      // <!-- /Sesi Login -->
 

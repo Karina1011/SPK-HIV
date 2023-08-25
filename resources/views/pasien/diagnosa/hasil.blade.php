@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="usia-pasien">Usia Pasien</label>
-                                    <input type="text" class="form-control" id="usia-pasien" value="{{ $pasien->usia }}" readonly />
+                                    <input type="text" class="form-control" id="usia-pasien" value="{{ $pasien->usia }} " readonly /> Tahun
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="jenis-kelamin">Jenis Kelamin</label>
@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="tgl_diagnosa">Tanggal Diagnosa</label>
-                                        <textarea class="form-control" id="tgl_diagnosa" readonly>{{ $tanggalDiagnosa }}</textarea>
+                                        <textarea class="form-control" id="tgl_diagnosa" readonly>{{ $tanggalDiagnosa }} WIB</textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="deskripsi-penyakit">Deskripsi Penyakit</label>
@@ -47,7 +47,8 @@
                                         <div class="alert alert-dark mb-" role="alert" id="penanganan-penyakit">{!!($penyakit->solusi)!!}</div>
                                     </div>
                                 @else
-                                <div class="alert alert-danger" role="alert"> Maaf, sistem tidak dapat mendiagnosa penyakit. Jika Anda mengalami gejala-gejala yang aneh, disarankan untuk berkonsultasi ke dokter.
+                                <div class="alert alert-danger" role="alert"> Maaf, sistem tidak dapat mengidentifikasi penyakit. Jika Anda memiliki gekala- gejala yang mencurigakan 
+                                    atau mengkhawatirkan, sebaiknya segera berkonsultasi dengan tenaga medis atau dokter untuk evaluasi medis yang tepat.
                                 </div>
                                 @endif
 

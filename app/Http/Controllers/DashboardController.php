@@ -30,6 +30,10 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact('jumlah_rule', 'jumlah_gejala', 'jumlah_penyakit', 'jumlah_user', 'jumlah_riwayat', 'jumlah_edukasi'));
     }
+    public function berandapasien()
+    {
+        return view('pasien.layouts.beranda-pasien');
+    }
     public function beranda()
     {
         return view('pasien.layouts.beranda');

@@ -30,9 +30,17 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $user = Auth::user();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Periksa peran pengguna yang berhasil login
+        if ($user->role == 'pasien') {
+            return redirect('/beranda');
+        } elseif ($user->role == 'admin' || $user->role == 'dokter') {
+            return redirect('/dashboard');
+        }
+
+        // Jika tidak ada peran yang sesuai, lemparkan pesan error
+        return redirect('')->withErrors('Peran pengguna tidak valid')->withInput();
     }
 
     /**

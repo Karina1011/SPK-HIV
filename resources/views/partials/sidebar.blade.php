@@ -54,14 +54,13 @@
       <div data-i18n="Misc">Rule/Aturan</div>
     </a>
   </li>
-
   <li class="menu-item">
     <a href="{{url('/riwayat')}}" class="menu-link">
       <i class="menu-icon tf-icons bx bx-cube-alt"></i>
       <div data-i18n="Misc">Riwayat Diagnosa</div>
     </a>
   </li>
-
+  
   @endif
   @if(Auth::user()->role !== 'dokter')
 
@@ -72,6 +71,14 @@
       <div data-i18n="Documentation">Data Pengguna</div>
     </a>
   </li>
+  @if(Auth::user()->role == 'pasien')
+  <li class="menu-item">
+      <a href="{{ route('riwayat.pasien', Auth::user()->pasien->id) }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+          <div data-i18n="Misc">Riwayat Diagnosa Saya</div>
+      </a>
+  </li>
+  @endif
 
   <li class="menu-item">
     <a href="{{ url ('/edukasi')}}"

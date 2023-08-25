@@ -34,16 +34,19 @@
                                 <td>{{ $item->penyakit->nama_penyakit }}</td>
                                 <td>{{ $item->tanggal_diagnosa->format('d-m-Y H:i') }} WIB</td>
                                 <td style="size: 20px;" class="row">
-                                    <div class="col-md-2 text-start">
-                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDetail" onclick="lihatDetailRiwayat('{{ $item->id }}')">
-                                            <i class="bx bx-show" style="color:white;"></i> Detail
-                                        </button>
+                                    <div class="row">
+                                        <div class="col-md-6 text-start mb-4">
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDetail" onclick="lihatDetailRiwayat('{{ $item->id }}')">
+                                                <i class="bx bx-show" style="color:white;"></i> Detail
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-start mb-4">
+                                            <button class="btn btn-primary" onclick="unduhDetailRiwayat('{{ $item->id }}')">
+                                                <i class="bx bx-download" style="color:white;"></i> Unduh
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2 text-start">
-                                        <button class="btn btn-primary" onclick="unduhDetailRiwayat('{{ $item->id }}')">
-                                            <i class="bx bx-download" style="color:white;"></i> Unduh
-                                        </button>
-                                    </div>
+                                    
                                 </td>
                             </tr>
                         @endforeach
